@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Widget.Trace.CardView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/space_sm"
+    app:cardElevation="0dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/space_md">
+
+        <!-- ================= ÍCONO DEL LOGRO ================= -->
+        <FrameLayout
+            android:id="@+id/fl_achievement_icon"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:background="@drawable/bg_avatar"
+            android:backgroundTint="@color/surface_2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <!-- En tu código final, este ícono y su color cambiarán según el logro -->
+            <ImageView
+                android:id="@+id/iv_achievement_icon"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_launcher_foreground"
+                app:tint="@color/primary" />
+        </FrameLayout>
+
+        <!-- ================= TEXTOS (TÍTULO Y DESCRIPCIÓN) ================= -->
+        <TextView
+            android:id="@+id/tv_achievement_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_md"
+            android:fontFamily="@font/dm_sans"
+            android:textColor="@color/text_primary"
+            android:textSize="@dimen/text_base"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/fl_achievement_icon"
+            app:layout_constraintTop_toTopOf="@id/fl_achievement_icon"
+            tools:text="Primeros 10K" />
+
+        <TextView
+            android:id="@+id/tv_achievement_desc"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_md"
+            android:layout_marginTop="2dp"
+            android:fontFamily="@font/dm_sans"
+            android:textColor="@color/text_secondary"
+            android:textSize="@dimen/text_sm"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/fl_achievement_icon"
+            app:layout_constraintTop_toBottomOf="@id/tv_achievement_title"
+            tools:text="Corre tus primeros 10 kilómetros en una sola sesión sin pausas." />
+
+        <!-- ================= ESTADO 1: EN PROGRESO ================= -->
+        <!-- Este contenedor muestra la barra si el logro aún no se completa -->
+        <LinearLayout
+            android:id="@+id/ll_progress_container"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_md"
+            android:layout_marginTop="@dimen/space_md"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/fl_achievement_icon"
+            app:layout_constraintTop_toBottomOf="@id/tv_achievement_desc">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="6dp">
+
+                <TextView
+                    android:id="@+id/tv_achievement_status"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/dm_sans"
+                    android:textColor="@color/primary"
+                    android:textSize="@dimen/text_xs"
+                    android:textStyle="bold"
+                    tools:text="En progreso" />
+
+                <TextView
+                    android:id="@+id/tv_achievement_progress_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/dm_sans"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="@dimen/text_xs"
+                    tools:text="8.4 / 10 km" />
+            </LinearLayout>
+
+            <!-- Barra de progreso lineal moderna de Material Design -->
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/pb_achievement_progress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:trackCornerRadius="4dp"
+                app:indicatorColor="@color/primary"
+                app:trackColor="@color/surface_2"
+                android:progress="84" />
+        </LinearLayout>
+
+        <!-- ================= ESTADO 2: OBTENIDO ================= -->
+        <!-- Este texto muestra la fecha si el logro ya está completado.
+             Por defecto en XML lo ocultamos con visibility="gone" y usamos
+             tools:visibility="visible" para verlo en el editor de diseño -->
+        <TextView
+            android:id="@+id/tv_achievement_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_md"
+            android:layout_marginTop="@dimen/space_md"
+            android:fontFamily="@font/dm_sans"
+            android:textColor="@color/text_disabled"
+            android:textSize="@dimen/text_xs"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/fl_achievement_icon"
+            app:layout_constraintTop_toBottomOf="@id/tv_achievement_desc"
+            tools:text="Obtenido el 12 Jun 2026"
+            tools:visibility="gone" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

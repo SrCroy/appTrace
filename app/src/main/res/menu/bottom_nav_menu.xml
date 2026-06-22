@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Inicio / Feed -->
+    <item
+        android:id="@+id/menu_feed"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:title="@string/nav_feed" />
+
+    <!-- Rutas -->
+    <item
+        android:id="@+id/menu_routes"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:title="@string/nav_routes" />
+
+    <!-- Elemento invisible para dejar el hueco del Botón Flotante (FAB) -->
+    <item
+        android:id="@+id/menu_placeholder"
+        android:title=""
+        android:enabled="false" />
+
+    <!-- Grupos -->
+    <item
+        android:id="@+id/menu_groups"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:title="@string/nav_groups" />
+
+    <!-- Perfil -->
+    <item
+        android:id="@+id/menu_profile"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:title="@string/nav_profile" />
+
+</menu>

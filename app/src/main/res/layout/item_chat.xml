@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:paddingHorizontal="@dimen/screen_padding"
+    android:paddingVertical="@dimen/space_md">
+
+    <FrameLayout
+        android:id="@+id/fl_chat_avatar"
+        android:layout_width="@dimen/avatar_md"
+        android:layout_height="@dimen/avatar_md"
+        android:background="@drawable/bg_avatar"
+        android:backgroundTint="@color/accent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tv_chat_initials"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/dm_sans"
+            android:textColor="@color/text_primary"
+            android:textSize="@dimen/text_md"
+            android:textStyle="bold"
+            tools:text="AL" />
+    </FrameLayout>
+
+    <View
+        android:id="@+id/v_online_status"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        android:background="@drawable/bg_avatar"
+        android:backgroundTint="@color/success"
+        app:layout_constraintBottom_toBottomOf="@id/fl_chat_avatar"
+        app:layout_constraintEnd_toEndOf="@id/fl_chat_avatar"
+        android:translationX="2dp"
+        android:translationY="-2dp" />
+
+    <TextView
+        android:id="@+id/tv_chat_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/space_md"
+        android:layout_marginEnd="@dimen/space_sm"
+        android:fontFamily="@font/dm_sans"
+        android:textColor="@color/text_primary"
+        android:textSize="@dimen/text_base"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@id/tv_chat_time"
+        app:layout_constraintStart_toEndOf="@id/fl_chat_avatar"
+        app:layout_constraintTop_toTopOf="@id/fl_chat_avatar"
+        tools:text="Ana López" />
+
+    <TextView
+        android:id="@+id/tv_chat_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/dm_sans"
+        android:textColor="@color/text_secondary"
+        android:textSize="@dimen/text_xs"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_chat_name"
+        app:layout_constraintBottom_toBottomOf="@id/tv_chat_name"
+        tools:text="10:42 AM" />
+
+    <TextView
+        android:id="@+id/tv_chat_last_message"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/space_md"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="@dimen/space_md"
+        android:ellipsize="end"
+        android:fontFamily="@font/dm_sans"
+        android:maxLines="1"
+        android:textColor="@color/text_secondary"
+        android:textSize="@dimen/text_sm"
+        app:layout_constraintEnd_toStartOf="@id/tv_unread_badge"
+        app:layout_constraintStart_toEndOf="@id/fl_chat_avatar"
+        app:layout_constraintTop_toBottomOf="@id/tv_chat_name"
+        tools:text="¡Perfecto! Nos vemos mañana en la entrada del parque para la ruta." />
+
+    <TextView
+        android:id="@+id/tv_unread_badge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_avatar"
+        android:backgroundTint="@color/primary"
+        android:fontFamily="@font/dm_sans"
+        android:minWidth="20dp"
+        android:paddingHorizontal="6dp"
+        android:paddingVertical="2dp"
+        android:textAlignment="center"
+        android:textColor="@color/background"
+        android:textSize="10sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/tv_chat_last_message"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_chat_last_message"
+        tools:text="2" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

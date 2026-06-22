@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Widget.Trace.CardView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/space_md"
+    app:cardElevation="0dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- ================= VISTA PREVIA DEL MAPA / ELEVACIÓN ================= -->
+        <ImageView
+            android:id="@+id/iv_route_preview"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/map_height_card"
+            android:background="@color/surface_2"
+            android:scaleType="centerCrop"
+            android:contentDescription="Vista previa de la ruta"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- ================= ÁREA DE TEXTO ================= -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/space_md"
+            app:layout_constraintTop_toBottomOf="@id/iv_route_preview"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <!-- Nombre de la Ruta -->
+            <TextView
+                android:id="@+id/tv_route_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/space_md"
+                android:fontFamily="@font/dm_sans"
+                android:textColor="@color/text_primary"
+                android:textSize="@dimen/text_lg"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/tv_route_difficulty"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Ruta del Boquerón" />
+
+            <!-- Nivel de Dificultad -->
+            <!-- El color se cambiará dinámicamente en Java (diff_easy, diff_medium, diff_hard) -->
+            <TextView
+                android:id="@+id/tv_route_difficulty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/dm_sans"
+                android:textColor="@color/diff_medium"
+                android:textSize="@dimen/text_sm"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_route_name"
+                app:layout_constraintBottom_toBottomOf="@id/tv_route_name"
+                tools:text="Moderado" />
+
+            <!-- Estadísticas: Distancia y Tiempo -->
+            <TextView
+                android:id="@+id/tv_route_stats"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_xs"
+                android:fontFamily="@font/dm_sans"
+                android:textColor="@color/text_secondary"
+                android:textSize="@dimen/text_sm"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_route_name"
+                tools:text="12.4 km   •   2h 05m" />
+
+            <!-- Calificación (Estrellas) -->
+            <LinearLayout
+                android:id="@+id/ll_route_rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_route_stats"
+                app:layout_constraintBottom_toBottomOf="@id/tv_route_stats">
+
+                <!-- Fila de estrellas pequeñas -->
+                <ImageView
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:src="@drawable/ic_launcher_foreground"
+                    app:tint="@color/warning" />
+                <ImageView
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:src="@drawable/ic_launcher_foreground"
+                    app:tint="@color/warning" />
+                <ImageView
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:src="@drawable/ic_launcher_foreground"
+                    app:tint="@color/warning" />
+                <ImageView
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:src="@drawable/ic_launcher_foreground"
+                    app:tint="@color/warning" />
+                <ImageView
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:src="@drawable/ic_launcher_foreground"
+                    app:tint="@color/warning" />
+
+                <!-- Puntuación Numérica -->
+                <TextView
+                    android:id="@+id/tv_route_score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:fontFamily="@font/dm_sans"
+                    android:textColor="@color/warning"
+                    android:textSize="@dimen/text_sm"
+                    android:textStyle="bold"
+                    tools:text="4.8" />
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

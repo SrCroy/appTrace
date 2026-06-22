@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Widget.Trace.CardView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/space_sm"
+    app:cardElevation="0dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/space_md">
+
+        <FrameLayout
+            android:id="@+id/fl_icon_bg"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/bg_avatar"
+            android:backgroundTint="@color/type_run_bg"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/iv_sport_icon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_launcher_foreground"
+                app:tint="@color/type_run" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/tv_history_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_md"
+            android:layout_marginEnd="@dimen/space_sm"
+            android:fontFamily="@font/dm_sans"
+            android:textColor="@color/text_primary"
+            android:textSize="@dimen/text_base"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@id/iv_arrow_right"
+            app:layout_constraintStart_toEndOf="@id/fl_icon_bg"
+            app:layout_constraintTop_toTopOf="@id/fl_icon_bg"
+            tools:text="Carrera matutina" />
+
+        <TextView
+            android:id="@+id/tv_history_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_md"
+            android:layout_marginTop="2dp"
+            android:fontFamily="@font/dm_sans"
+            android:textColor="@color/text_secondary"
+            android:textSize="@dimen/text_xs"
+            app:layout_constraintStart_toEndOf="@id/fl_icon_bg"
+            app:layout_constraintTop_toBottomOf="@id/tv_history_title"
+            tools:text="Ayer, 6:30 AM" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_md"
+            android:layout_marginTop="@dimen/space_sm"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/iv_arrow_right"
+            app:layout_constraintStart_toEndOf="@id/fl_icon_bg"
+            app:layout_constraintTop_toBottomOf="@id/tv_history_date">
+
+            <TextView
+                android:id="@+id/tv_history_distance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/space_lg"
+                android:fontFamily="@font/dm_sans"
+                android:textColor="@color/text_primary"
+                android:textSize="@dimen/text_sm"
+                android:textStyle="bold"
+                tools:text="8.4 km" />
+
+            <TextView
+                android:id="@+id/tv_history_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/space_lg"
+                android:fontFamily="@font/dm_sans"
+                android:textColor="@color/text_secondary"
+                android:textSize="@dimen/text_sm"
+                tools:text="42:18" />
+
+            <TextView
+                android:id="@+id/tv_history_pace"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/dm_sans"
+                android:textColor="@color/text_secondary"
+                android:textSize="@dimen/text_sm"
+                tools:text="5:02 /km" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/iv_arrow_right"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_launcher_foreground"
+            app:tint="@color/text_disabled"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

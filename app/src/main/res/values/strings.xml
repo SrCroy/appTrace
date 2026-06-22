@@ -1,3 +1,119 @@
 <resources>
-    <string name="app_name">appTrace</string>
+    <!-- App -->
+    <string name="app_name">Trace</string>
+    <string name="app_version">v1.0.0</string>
+    <string name="splash_tagline">Registra tu camino,\ncomparte tu progreso</string>
+
+    <!-- Auth -->
+    <string name="login_title">Bienvenido de vuelta</string>
+    <string name="login_subtitle">Inicia sesión para continuar</string>
+    <string name="hint_email">Correo electrónico</string>
+    <string name="hint_password">Contraseña</string>
+    <string name="btn_login">Iniciar sesión</string>
+    <string name="btn_google">Continuar con Google</string>
+    <string name="link_forgot">¿Olvidaste tu contraseña?</string>
+    <string name="link_register">¿No tienes cuenta? Regístrate</string>
+
+    <string name="register_title">Crea tu cuenta</string>
+    <string name="register_subtitle">Únete a la comunidad Trace</string>
+    <string name="hint_name">Nombre completo</string>
+    <string name="hint_confirm_pass">Confirmar contraseña</string>
+    <string name="btn_register">Crear cuenta</string>
+    <string name="label_sports">¿Qué deportes practicas?</string>
+    <string name="terms_text">Al registrarte aceptas nuestros Términos de Servicio y Política de Privacidad</string>
+
+    <!-- Navigation -->
+    <string name="nav_feed">Inicio</string>
+    <string name="nav_routes">Rutas</string>
+    <string name="nav_track">Registrar</string>
+    <string name="nav_groups">Grupos</string>
+    <string name="nav_profile">Perfil</string>
+
+    <!-- Feed -->
+    <string name="feed_title">Trace</string>
+    <string name="btn_share">Compartir</string>
+    <string name="label_distance">Distancia</string>
+    <string name="label_time">Tiempo</string>
+    <string name="label_pace">Ritmo</string>
+    <string name="label_elevation">Desnivel</string>
+    <string name="label_calories">Calorías</string>
+    <string name="label_hr">F. cardíaca</string>
+
+    <!-- Activity Types -->
+    <string name="type_run">Carrera</string>
+    <string name="type_cycle">Ciclismo</string>
+    <string name="type_trail">Trail</string>
+    <string name="type_swim">Natación</string>
+
+    <!-- Tracking -->
+    <string name="tracking_status_running">EN CURSO</string>
+    <string name="tracking_status_paused">PAUSADO</string>
+    <string name="btn_pause">Pausar</string>
+    <string name="btn_resume">Reanudar</string>
+    <string name="btn_stop">Detener</string>
+
+    <!-- Routes -->
+    <string name="routes_title">Rutas</string>
+    <string name="btn_start_route">Iniciar ruta</string>
+    <string name="diff_easy">Fácil</string>
+    <string name="diff_medium">Moderado</string>
+    <string name="diff_hard">Difícil</string>
+
+    <!-- Groups -->
+    <string name="groups_title">Grupos</string>
+    <string name="btn_create_group">Crear grupo</string>
+    <string name="btn_join">Unirse al grupo</string>
+    <string name="label_members">miembros</string>
+    <string name="label_activities">actividades</string>
+
+    <!-- Profile -->
+    <string name="profile_title">Mi Perfil</string>
+    <string name="btn_edit_profile">Editar perfil</string>
+    <string name="label_friends">Amigos</string>
+    <string name="label_km">Kilómetros</string>
+
+    <!-- Messaging -->
+    <string name="messages_title">Mensajes</string>
+    <string name="hint_message">Mensaje...</string>
+    <string name="status_online">En línea</string>
+
+    <!-- Search -->
+    <string name="search_hint">Buscar personas, rutas, grupos...</string>
+    <string name="search_trending">Tendencias</string>
+    <string name="search_suggestions">Sugerencias</string>
+    <string name="tab_all">Todo</string>
+    <string name="tab_people">Personas</string>
+    <string name="tab_routes">Rutas</string>
+    <string name="tab_groups">Grupos</string>
+
+    <!-- Achievements -->
+    <string name="achievements_title">Logros</string>
+    <string name="achievement_completed">¡Completado!</string>
+
+    <!-- Notifications -->
+    <string name="notifications_title">Notificaciones</string>
+    <string name="notif_new">Nuevas</string>
+    <string name="notif_previous">Anteriores</string>
+
+    <!-- Actions -->
+    <string name="btn_accept">Aceptar</string>
+    <string name="btn_reject">Rechazar</string>
+    <string name="btn_follow">Seguir</string>
+    <string name="btn_following">Siguiendo</string>
+    <string name="btn_message">Mensaje</string>
+    <string name="btn_save">Guardar</string>
+    <string name="btn_publish">Publicar</string>
+    <string name="btn_cancel">Cancelar</string>
+    <string name="btn_create">Crear</string>
+    <string name="btn_view_all">Ver historial completo</string>
+
+    <!-- Placeholders -->
+    <string name="ph_search_groups">Buscar grupos...</string>
+    <string name="ph_caption">Añade una descripción...</string>
+    <string name="ph_group_name">Ej. Corredores del Valle</string>
+    <string name="ph_description">Describe el objetivo del grupo...</string>
+    <string name="ph_route_name">Ej. Circuito del Lago</string>
+    <string name="ph_bio">Corredor apasionado. Madrugador empedernido.</string>
+    <string name="ph_comment">Escribe un comentario...</string>
+    <string name="ph_reply">Responder a %s...</string>
 </resources>

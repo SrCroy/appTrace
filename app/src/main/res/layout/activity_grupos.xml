@@ -3,88 +3,83 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cl_top_bar"
+    <LinearLayout
+        android:id="@+id/ll_header"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:paddingHorizontal="@dimen/screen_padding"
+        android:paddingTop="@dimen/space_xl"
+        android:paddingBottom="@dimen/space_md"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/iv_logo_main"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:src="@drawable/ic_launcher_foreground"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <TextView
-            android:id="@+id/tv_app_title"
+            android:id="@+id/tv_groups_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/space_sm"
             android:fontFamily="@font/dm_sans"
-            android:text="@string/feed_title"
+            android:text="@string/groups_title"
             android:textColor="@color/text_primary"
-            android:textSize="@dimen/text_xl"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/iv_logo_main"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textSize="@dimen/text_3xl"
+            android:textStyle="bold" />
 
-        <ImageView
-            android:id="@+id/iv_notifications"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/ic_launcher_foreground"
-            app:tint="@color/text_secondary"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.Trace.TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_lg"
+            android:hint="@string/ph_search_groups"
+            app:startIconTint="@color/text_secondary"
+            app:endIconMode="clear_text"
+            app:endIconTint="@color/text_secondary">
 
-        <ImageView
-            android:id="@+id/iv_search"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginEnd="@dimen/space_lg"
-            android:src="@drawable/ic_launcher_foreground"
-            app:tint="@color/text_secondary"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/iv_notifications"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <View
-            android:layout_width="8dp"
-            android:layout_height="8dp"
-            android:background="@drawable/ic_launcher_foreground"
-            android:backgroundTint="@color/primary"
-            app:layout_constraintEnd_toEndOf="@id/iv_notifications"
-            app:layout_constraintTop_toTopOf="@id/iv_notifications"
-            android:translationX="2dp"
-            android:translationY="-2dp"/>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_search_groups"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:textColor="@color/text_primary"
+                android:imeOptions="actionSearch" />
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_feed"
+        android:id="@+id/rv_groups"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:clipToPadding="false"
+        android:paddingHorizontal="@dimen/screen_padding"
         android:paddingBottom="100dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cl_top_bar"
-        tools:listitem="@layout/item_publicacion" /> <View
-    android:id="@+id/v_bottom_nav_bg"
-    android:layout_width="match_parent"
-    android:layout_height="@dimen/bottom_nav_height"
-    android:background="@color/surface_1"
-    app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/ll_header"
+        tools:listitem="@layout/item_grupo" />
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/fab_create_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/screen_padding"
+        android:layout_marginBottom="88dp"
+        android:backgroundTint="@color/primary"
+        android:fontFamily="@font/dm_sans"
+        android:text="@string/btn_create_group"
+        android:textColor="@color/background"
+        android:textStyle="bold"
+        app:icon="@drawable/ic_launcher_foreground"
+        app:iconTint="@color/background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <View
+        android:id="@+id/v_bottom_nav_bg"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bottom_nav_height"
+        android:background="@color/surface_1"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
     <LinearLayout
         android:id="@+id/ll_bottom_nav"
@@ -103,14 +98,14 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@drawable/ic_launcher_foreground"
-                app:tint="@color/primary" />
+                app:tint="@color/text_secondary" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:fontFamily="@font/dm_sans"
                 android:text="@string/nav_feed"
-                android:textColor="@color/primary"
+                android:textColor="@color/text_secondary"
                 android:textSize="@dimen/text_xs" />
         </LinearLayout>
 
@@ -150,14 +145,14 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@drawable/ic_launcher_foreground"
-                app:tint="@color/text_secondary" />
+                app:tint="@color/primary" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:fontFamily="@font/dm_sans"
                 android:text="@string/nav_groups"
-                android:textColor="@color/text_secondary"
+                android:textColor="@color/primary"
                 android:textSize="@dimen/text_xs" />
         </LinearLayout>
 
@@ -189,7 +184,6 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:backgroundTint="@color/primary_light"
-        android:contentDescription="@string/nav_track"
         android:src="@drawable/ic_launcher_foreground"
         app:borderWidth="0dp"
         app:elevation="4dp"

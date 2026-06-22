@@ -1,5 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <!-- Backgrounds -->
+    <color name="background">#0F1623</color>
+    <color name="surface_1">#1A2236</color>
+    <color name="surface_2">#232E45</color>
+    <color name="surface_3">#1E2B3E</color>
+
+    <!-- Brand Colors -->
+    <color name="primary">#34D98A</color>
+    <color name="primary_dark">#2AB87A</color>
+    <color name="primary_light">#5AE3A0</color>
+    <color name="accent">#5B8DEF</color>
+    <color name="accent_dark">#4A7ADE</color>
+
+    <!-- Text -->
+    <color name="text_primary">#EEF2FF</color>
+    <color name="text_secondary">#7B8FAF</color>
+    <color name="text_disabled">#4B5A72</color>
+
+    <!-- Semantic -->
+    <color name="error">#FF5A5A</color>
+    <color name="warning">#FF9A3C</color>
+    <color name="success">#34D98A</color>
+    <color name="purple">#B47FFF</color>
+
+    <!-- Borders -->
+    <color name="border">#FFFFFF14</color>
+    <color name="divider">#FFFFFF0A</color>
+
+    <!-- Overlays -->
+    <color name="overlay_primary">#1A34D98A</color>
+    <color name="overlay_accent">#1A5B8DEF</color>
+    <color name="overlay_dark">#CC000000</color>
+    <color name="transparent">#00000000</color>
+
+    <!-- Activity Type Colors -->
+    <color name="type_run_bg">#1A34D98A</color>
+    <color name="type_run">#34D98A</color>
+    <color name="type_bike_bg">#1A5B8DEF</color>
+    <color name="type_bike">#5B8DEF</color>
+    <color name="type_trail_bg">#1AFF9A3C</color>
+    <color name="type_trail">#FF9A3C</color>
+    <color name="type_swim_bg">#1AB47FFF</color>
+    <color name="type_swim">#B47FFF</color>
+
+    <!-- Difficulty Colors -->
+    <color name="diff_easy">#34D98A</color>
+    <color name="diff_medium">#FF9A3C</color>
+    <color name="diff_hard">#FF5A5A</color>
+
+    <!-- Bottom Navigation -->
+    <color name="bottom_nav_selected">#34D98A</color>
+    <color name="bottom_nav_unselected">#4B5A72</color>
+
+    <!-- Chart Colors -->
+    <color name="chart_1">#34D98A</color>
+    <color name="chart_2">#5B8DEF</color>
+    <color name="chart_3">#FF9A3C</color>
+    <color name="chart_4">#FF5A5A</color>
+    <color name="chart_5">#B47FFF</color>
 </resources>

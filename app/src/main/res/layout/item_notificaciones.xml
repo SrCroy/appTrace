@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:paddingHorizontal="@dimen/screen_padding"
+    android:paddingVertical="@dimen/space_md">
+
+    <FrameLayout
+        android:id="@+id/fl_notif_avatar"
+        android:layout_width="@dimen/avatar_md"
+        android:layout_height="@dimen/avatar_md"
+        android:background="@drawable/bg_avatar"
+        android:backgroundTint="@color/purple"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tv_notif_initials"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/dm_sans"
+            android:textColor="@color/text_primary"
+            android:textSize="@dimen/text_md"
+            android:textStyle="bold"
+            tools:text="RS" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/fl_action_icon"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:background="@drawable/bg_avatar"
+        android:backgroundTint="@color/surface_1"
+        android:elevation="2dp"
+        app:layout_constraintBottom_toBottomOf="@id/fl_notif_avatar"
+        app:layout_constraintEnd_toEndOf="@id/fl_notif_avatar"
+        android:translationX="4dp"
+        android:translationY="4dp">
+
+        <ImageView
+            android:id="@+id/iv_action_icon"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_launcher_foreground"
+            app:tint="@color/error" /> </FrameLayout>
+
+    <TextView
+        android:id="@+id/tv_notif_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/space_md"
+        android:layout_marginEnd="@dimen/space_sm"
+        android:fontFamily="@font/dm_sans"
+        android:textColor="@color/text_primary"
+        android:textSize="@dimen/text_sm"
+        app:layout_constraintEnd_toStartOf="@id/v_unread_dot"
+        app:layout_constraintStart_toEndOf="@id/fl_notif_avatar"
+        app:layout_constraintTop_toTopOf="@id/fl_notif_avatar"
+        tools:text="A Roberto Silva le ha gustado tu actividad 'Carrera matutina'." />
+
+    <TextView
+        android:id="@+id/tv_notif_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:fontFamily="@font/dm_sans"
+        android:textColor="@color/text_secondary"
+        android:textSize="@dimen/text_xs"
+        app:layout_constraintStart_toStartOf="@id/tv_notif_text"
+        app:layout_constraintTop_toBottomOf="@id/tv_notif_text"
+        tools:text="Hace 2 horas" />
+
+    <View
+        android:id="@+id/v_unread_dot"
+        android:layout_width="8dp"
+        android:layout_height="8dp"
+        android:background="@drawable/bg_avatar"
+        android:backgroundTint="@color/primary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
