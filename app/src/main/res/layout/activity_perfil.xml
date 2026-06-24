@@ -69,9 +69,12 @@
                 android:layout_marginTop="@dimen/space_md"
                 android:background="@drawable/bg_avatar"
                 android:backgroundTint="@color/purple"
+                android:outlineProvider="background"
+                android:clipToOutline="true"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
                 <TextView
+                    android:id="@+id/tv_avatar_initials"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -80,6 +83,12 @@
                     android:textSize="@dimen/text_2xl"
                     android:textStyle="bold"
                     tools:text="CM" />
+                <ImageView
+                    android:id="@+id/iv_avatar_profile"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:visibility="gone" />
             </FrameLayout>
 
             <ImageView
@@ -157,7 +166,7 @@
                 app:layout_constraintTop_toBottomOf="@id/tv_bio">
 
                 <com.google.android.material.button.MaterialButton
-                    id="@+id/btn_edit_profile"
+                    android:id="@+id/btn_edit_profile"
                     style="@style/Widget.Trace.Button"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/btn_height"
@@ -167,7 +176,7 @@
                     android:textSize="@dimen/text_base" />
 
                 <com.google.android.material.button.MaterialButton
-                    id="@+id/btn_friends"
+                    android:id="@+id/btn_friends"
                     style="@style/Widget.Trace.Button"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/btn_height"

@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
+    id 'androidx.room'
 }
 
 android {
@@ -26,10 +27,19 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
     }
+
+    configurations.all {
+        exclude group: 'com.intellij', module: 'annotations'
+    }
+}
+
+room {
+    schemaDirectory "$projectDir/schemas"
 }
 
 dependencies {
@@ -40,6 +50,7 @@ dependencies {
     testImplementation libs.junit
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
+
 
     // Retrofit 2 - cliente HTTP type-safe
     implementation 'com.squareup.retrofit2:retrofit:2.11.0'
@@ -52,4 +63,14 @@ dependencies {
 
     // Glide para carga y caché de imágenes desde URL
     implementation 'com.github.bumptech.glide:glide:5.0.5'
+
+    implementation 'androidx.room:room-runtime-android:2.8.4'
+    implementation 'androidx.room:room-compiler:2.8.4'
+    implementation 'androidx.appcompat:appcompat:1.7.0'
+    implementation 'com.google.android.material:material:1.12.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.11.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.11.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.12.0'
+    implementation 'com.github.bumptech.glide:glide:4.16.0'
+
 }
