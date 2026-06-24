@@ -25,7 +25,7 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginEnd="@dimen/space_md"
-            android:src="@drawable/ic_launcher_foreground"
+            android:src="@drawable/x"
             app:tint="@color/text_primary" />
 
         <TextView

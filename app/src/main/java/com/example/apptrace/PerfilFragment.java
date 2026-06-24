@@ -124,7 +124,7 @@ public class PerfilFragment extends Fragment {
         if (recargarAlVolver) {
             recargarAlVolver = false;
             cargarPerfil();
-            cargarLogros(); // Añadido para que también actualice los logros si cambiaron
+            cargarLogros();
         }
     }
 
@@ -200,7 +200,7 @@ public class PerfilFragment extends Fragment {
         String iniciales = iniciales(p.getNombre(), p.getApellido());
         tvAvatarInitials.setText(iniciales);
 
-        // Actualizado para usar RetrofitClient.storageUrl igual que en tu Activity nueva
+
         String avatarUrl = null;
         if (p.getAvatar() != null && !p.getAvatar().isEmpty()) {
             avatarUrl = RetrofitClient.storageUrl(p.getAvatar());
@@ -231,7 +231,7 @@ public class PerfilFragment extends Fragment {
                 .into(ivAvatarProfile);
     }
 
-    // ─── Utilidades ───────────────────────────────────────────────────────────
+
 
     private String iniciales(String nombre, String apellido) {
         StringBuilder sb = new StringBuilder();
