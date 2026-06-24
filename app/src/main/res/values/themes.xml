@@ -109,4 +109,16 @@
         <item name="backgroundTint">@color/surface_1</item>
         <item name="shapeAppearance">@style/ShapeAppearance.Trace.ExtraLarge</item>
     </style>
+    <style name="ThemeOverlay.Trace.Dialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+
+        <item name="colorSurface">@color/surface_1</item>
+        <item name="colorSurfaceContainer">@color/surface_1</item>
+        <item name="colorSurfaceContainerHigh">@color/surface_1</item>
+        <item name="colorSurfaceContainerHighest">@color/surface_1</item>
+        <item name="android:background">@color/surface_1</item>
+
+        <item name="materialButtonStyle">@style/Widget.Material3.Button.TextButton</item>
+
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorOnSurface">@color/text_primary</item> </style>
 </resources>
