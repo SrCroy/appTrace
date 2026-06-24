@@ -137,4 +137,13 @@ public interface ApiService {
 
     @DELETE("rutas/{id}")
     Call<ApiResponse<Object>> eliminarRuta(@Path("id") int rutaId);
+
+    // ── Logros (Módulo 5) ─────────────────────────────────────────────────────
+
+    @GET("logros")
+    Call<ApiResponse<List<LogroData>>> catalogoLogros();
+
+    @GET("logros/mis-logros")
+    Call<MisLogrosResponse> misLogros();
+
 }

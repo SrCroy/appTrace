@@ -388,14 +388,15 @@
                 android:id="@+id/btn_logout"
                 style="@style/Widget.Trace.Button"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/btn_height"
-                android:layout_marginTop="@dimen/space_2xl"
+                android:layout_height="0dp"
+                android:layout_marginTop="32dp"
                 android:backgroundTint="@color/surface_2"
                 android:text="Cerrar sesión"
                 android:textColor="@color/error"
-                android:textSize="@dimen/text_base"
-                app:layout_constraintTop_toBottomOf="@id/cv_logros_preview" />
 
+                android:textSize="@dimen/text_base"
+                app:layout_constraintTop_toBottomOf="@+id/cv_logros_preview"
+                tools:layout_editor_absoluteX="16dp" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
