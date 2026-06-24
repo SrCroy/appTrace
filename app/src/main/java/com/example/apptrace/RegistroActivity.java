@@ -121,7 +121,7 @@ public class RegistroActivity extends AppCompatActivity {
     // ─── Selección de imagen ──────────────────────────────────────────────────
 
     private void mostrarSelectorImagen() {
-        new AlertDialog.Builder(this)
+        new AlertDialog.Builder(this, R.style.Theme_Trace_Dialog)
                 .setTitle("Foto de perfil")
                 .setItems(new String[]{"Tomar foto", "Elegir de galería"}, (dialog, which) -> {
                     if (which == 0) {
@@ -207,7 +207,7 @@ public class RegistroActivity extends AppCompatActivity {
         }
 
         if (nivel <= NIVEL_BATERIA_BAJO && !cargando) {
-            new AlertDialog.Builder(this)
+            new AlertDialog.Builder(this, R.style.Theme_Trace_Dialog)
                     .setTitle("Batería baja")
                     .setMessage("La batería está al " + nivel + "%. El proceso puede "
                             + "interrumpirse si se agota. ¿Deseas continuar?")
