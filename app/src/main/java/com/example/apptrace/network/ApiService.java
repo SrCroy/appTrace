@@ -72,32 +72,23 @@ public interface ApiService {
 
     // Obtener el muro de noticias global
     @GET("publicaciones")
-    Call<List<Publicacion>> getFeedPrincipal(@Header("Authorization") String token);
+    Call<List<Publicacion>> getFeedPrincipal();
 
     // Listar las comunidades sugeridas y unidas
     @GET("grupos")
-    Call<List<Grupo>> getGrupos(@Header("Authorization") String token);
+    Call<List<Grupo>> getGrupos();
 
     // Enviar un comentario en una publicación
     @POST("comentarios")
-    Call<Comentario> crearComentario(
-            @Header("Authorization") String token,
-            @Body Comentario comentario
-    );
+    Call<Comentario> crearComentario(@Body Comentario comentario);
 
     // Obtener el muro interno de una comunidad específica
     @GET("grupos/{id}/publicaciones")
-    Call<List<Publicacion>> getPublicacionesGrupo(
-            @Header("Authorization") String token,
-            @Path("id") int grupoId
-    );
+    Call<List<Publicacion>> getPublicacionesGrupo(@Path("id") int grupoId);
 
     // Dar me gusta a una publicación o ruta compartida
     @POST("reacciones")
-    Call<Reaccion> crearReaccion(
-            @Header("Authorization") String token,
-            @Body Reaccion reaccion
-    );
+    Call<Reaccion> crearReaccion(@Body Reaccion reaccion);
 
     // ── Actividades (Módulo 3) ────────────────────────────────────────────────
 
