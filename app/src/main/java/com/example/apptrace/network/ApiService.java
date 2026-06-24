@@ -45,14 +45,6 @@ import retrofit2.http.Path;
 
 public interface ApiService {
 
-    // ── Logros (Módulo 5) ─────────────────────────────────────────────────────
-
-    @GET("logros")
-    Call<ApiResponse<List<LogroData>>> catalogoLogros();
-
-    @GET("logros/mis-logros")
-    Call<MisLogrosResponse> misLogros();
-
     // ── Auth ──────────────────────────────────────────────────────────────────
 
     @POST("login")
