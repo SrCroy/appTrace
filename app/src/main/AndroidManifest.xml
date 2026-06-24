@@ -83,6 +83,10 @@
             android:name=".ActividadesActivity"
             android:exported="false" />
 
+        <activity
+            android:name=".LogrosActivity"
+            android:exported="false" />
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyD7_z1Byfn5Yoj280LSGJZl8QTeRnPCvbw" />

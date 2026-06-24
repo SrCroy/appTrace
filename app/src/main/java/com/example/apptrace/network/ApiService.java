@@ -11,6 +11,8 @@ import com.example.apptrace.model.auth.LoginRequest;
 import com.example.apptrace.model.profile.ChangePasswordData;
 import com.example.apptrace.model.profile.EditProfileRequest;
 import com.example.apptrace.model.profile.ProfileData;
+import com.example.apptrace.model.logro.LogroData;
+import com.example.apptrace.model.logro.MisLogrosResponse;
 import com.example.apptrace.model.route.EditRouteRequest;
 import com.example.apptrace.model.route.RouteData;
 import com.example.apptrace.model.route.RouteDetail;
@@ -30,6 +32,14 @@ import retrofit2.http.Part;
 import retrofit2.http.Path;
 
 public interface ApiService {
+
+    // ── Logros (Módulo 5) ─────────────────────────────────────────────────────
+
+    @GET("logros")
+    Call<ApiResponse<List<LogroData>>> catalogoLogros();
+
+    @GET("logros/mis-logros")
+    Call<MisLogrosResponse> misLogros();
 
     // ── Auth ──────────────────────────────────────────────────────────────────
 

@@ -1,4 +1,4 @@
-package com.example.apptrace;
+package com.example.apptrace.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +11,9 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.apptrace.R;
 import com.example.apptrace.model.route.RouteData;
+import com.example.apptrace.network.RetrofitClient;
 
 import java.util.List;
 import java.util.Locale;
@@ -52,13 +54,12 @@ public class RutaAdapter extends RecyclerView.Adapter<RutaAdapter.ViewHolder> {
         h.tvStats.setText(distStr);
         h.tvScore.setText("");
 
-        // Overlay con tipo de deporte y distancia
         h.tvOverlayTipo.setText(tipoLabel(ruta.getTipo()));
         h.tvOverlayDist.setText(distStr);
 
         if (ruta.getMiniatura() != null && !ruta.getMiniatura().isEmpty()) {
             h.vPlaceholder.setVisibility(View.GONE);
-            Glide.with(h.itemView).load(ruta.getMiniatura()).into(h.ivPreview);
+            Glide.with(h.itemView).load(RetrofitClient.storageUrl(ruta.getMiniatura())).into(h.ivPreview);
         } else {
             h.vPlaceholder.setVisibility(View.VISIBLE);
             h.ivPreview.setImageDrawable(null);
