@@ -22,6 +22,12 @@ import com.example.apptrace.model.route.RouteData;
 import com.example.apptrace.model.route.RouteDetail;
 
 import java.util.List;
+import com.example.apptrace.models.Comentario;
+import com.example.apptrace.models.Grupo;
+import com.example.apptrace.models.Publicacion;
+import com.example.apptrace.models.Reaccion;
+
+import java.util.List;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -36,6 +42,14 @@ import retrofit2.http.Part;
 import retrofit2.http.Path;
 
 public interface ApiService {
+
+    // ── Logros (Módulo 5) ─────────────────────────────────────────────────────
+
+    @GET("logros")
+    Call<ApiResponse<List<LogroData>>> catalogoLogros();
+
+    @GET("logros/mis-logros")
+    Call<MisLogrosResponse> misLogros();
 
     // ── Auth ──────────────────────────────────────────────────────────────────
 
@@ -67,6 +81,26 @@ public interface ApiService {
     @Multipart
     @POST("avatar/update")
     Call<ApiResponse<Object>> actualizarAvatar(@Part MultipartBody.Part avatar);
+
+    // Obtener el muro de noticias global
+    @GET("publicaciones")
+    Call<List<Publicacion>> getFeedPrincipal();
+
+    // Listar las comunidades sugeridas y unidas
+    @GET("grupos")
+    Call<List<Grupo>> getGrupos();
+
+    // Enviar un comentario en una publicación
+    @POST("comentarios")
+    Call<Comentario> crearComentario(@Body Comentario comentario);
+
+    // Obtener el muro interno de una comunidad específica
+    @GET("grupos/{id}/publicaciones")
+    Call<List<Publicacion>> getPublicacionesGrupo(@Path("id") int grupoId);
+
+    // Dar me gusta a una publicación o ruta compartida
+    @POST("reacciones")
+    Call<Reaccion> crearReaccion(@Body Reaccion reaccion);
 
     // ── Actividades (Módulo 3) ────────────────────────────────────────────────
 
@@ -137,13 +171,4 @@ public interface ApiService {
 
     @DELETE("rutas/{id}")
     Call<ApiResponse<Object>> eliminarRuta(@Path("id") int rutaId);
-
-    // ── Logros (Módulo 5) ─────────────────────────────────────────────────────
-
-    @GET("logros")
-    Call<ApiResponse<List<LogroData>>> catalogoLogros();
-
-    @GET("logros/mis-logros")
-    Call<MisLogrosResponse> misLogros();
-
 }
