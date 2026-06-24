@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             } else if (itemId == R.id.menu_groups) {
 
-                Toast.makeText(this, "Grupos — próximamente", Toast.LENGTH_SHORT).show();
+                cargarFragmento(new GruposFragment());
                 return true;
             } else if (itemId == R.id.menu_profile) {
                 cargarFragmento(new PerfilFragment());

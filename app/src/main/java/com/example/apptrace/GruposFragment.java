@@ -1,64 +1,136 @@
 package com.example.apptrace;
 
+import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link GruposFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.apptrace.models.Grupo;
+import com.example.apptrace.network.ApiService;
+import com.example.apptrace.network.RetrofitClient;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+import com.google.android.material.textfield.TextInputEditText;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class GruposFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private RecyclerView rvGrupos;
+    private GrupoAdapter adapter;
+    private List<Grupo> listaGrupos = new ArrayList<>();
+    private TextInputEditText etBusqueda;
+    private ExtendedFloatingActionButton fabCreateGroup;
+    private ApiService apiService;
 
     public GruposFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment GruposFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static GruposFragment newInstance(String param1, String param2) {
-        GruposFragment fragment = new GruposFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+        // Constructor público vacío requerido
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        // Asume que renombraste "activity_grupos.xml" a "fragment_grupos.xml"
         return inflater.inflate(R.layout.fragment_grupos, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        // 1. Enlazar vistas
+        rvGrupos = view.findViewById(R.id.rv_groups);
+        etBusqueda = view.findViewById(R.id.et_search_groups);
+        fabCreateGroup = view.findViewById(R.id.fab_create_group);
+
+        // 2. Configurar RecyclerView
+        rvGrupos.setLayoutManager(new LinearLayoutManager(requireContext()));
+
+        adapter = new GrupoAdapter(listaGrupos, grupoId -> {
+            // Puente hacia el muro interno de la comunidad (Mantenemos Activity para el detalle)
+            Intent intent = new Intent(requireContext(), DetalleGrupoActivity.class);
+            intent.putExtra("GRUPO_ID", grupoId);
+            startActivity(intent);
+        });
+
+        rvGrupos.setAdapter(adapter);
+
+        // 3. Inicializar API
+        apiService = RetrofitClient.getClient().create(ApiService.class);
+
+        // 4. Lógica de la barra de búsqueda en tiempo real
+        if (etBusqueda != null) {
+            etBusqueda.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    filtrarGrupos(s.toString());
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {}
+            });
+        }
+
+        // 5. Botón de crear grupo
+        if (fabCreateGroup != null) {
+            fabCreateGroup.setOnClickListener(v -> {
+                Intent intent = new Intent(requireContext(), CrearGrupoActivity.class);
+                startActivity(intent);
+            });
+        }
+
+        // 6. Cargar datos del servidor
+        cargarGrupos();
+    }
+
+    private void cargarGrupos() {
+        apiService.getGrupos().enqueue(new Callback<List<Grupo>>() {
+            @Override
+            public void onResponse(@NonNull Call<List<Grupo>> call, @NonNull Response<List<Grupo>> response) {
+                if (!isAdded()) return; // Protección vital en Fragments
+
+                if (response.isSuccessful() && response.body() != null) {
+                    listaGrupos.clear();
+                    listaGrupos.addAll(response.body());
+                    adapter.notifyDataSetChanged();
+                } else {
+                    Toast.makeText(requireContext(), "Error al cargar comunidades", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<List<Grupo>> call, @NonNull Throwable t) {
+                if (!isAdded()) return;
+                Toast.makeText(requireContext(), "Fallo de conexión", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void filtrarGrupos(String texto) {
+        List<Grupo> listaFiltrada = new ArrayList<>();
+        for (Grupo g : listaGrupos) {
+            // Asumiendo que getNombre() existe en tu modelo Grupo
+            if (g.getNombre() != null && g.getNombre().toLowerCase().contains(texto.toLowerCase())) {
+                listaFiltrada.add(g);
+            }
+        }
+        adapter.setFiltrarLista(listaFiltrada);
     }
 }

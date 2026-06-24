@@ -87,6 +87,10 @@ public interface ApiService {
     @GET("grupos")
     Call<List<Grupo>> getGrupos();
 
+    // Obtener los detalles de un grupo específico
+    @GET("grupos/{id}")
+    Call<ApiResponse<Grupo>> obtenerGrupo(@Path("id") int grupoId);
+
     // Enviar un comentario en una publicación
     @POST("comentarios")
     Call<Comentario> crearComentario(@Body Comentario comentario);
