@@ -112,7 +112,7 @@
                         android:layout_width="16dp"
                         android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:src="@drawable/ic_launcher_foreground"
+                        android:src="@drawable/camara"
                         app:tint="@color/background" />
                 </FrameLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
