@@ -13,7 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.apptrace.R;
+import com.example.apptrace.model.auth.ApiResponse;
 import com.example.apptrace.models.Publicacion;
 import com.example.apptrace.network.ApiService;
 import com.example.apptrace.network.RetrofitClient;
@@ -81,14 +81,13 @@ public class FeedFragment extends Fragment {
     }
 
     private void cargarFeedDesdeServidor() {
-        Call<List<Publicacion>> call = apiService.getFeedPrincipal();
-
-        call.enqueue(new Callback<List<Publicacion>>() {
+        apiService.getFeedPrincipal().enqueue(new Callback<ApiResponse<List<Publicacion>>>() {
             @Override
-            public void onResponse(@NonNull Call<List<Publicacion>> call, @NonNull Response<List<Publicacion>> response) {
-                if (response.isSuccessful() && response.body() != null) {
+            public void onResponse(@NonNull Call<ApiResponse<List<Publicacion>>> call, @NonNull Response<ApiResponse<List<Publicacion>>> response) {
+                if (!isAdded()) return;
+                if (response.isSuccessful() && response.body() != null && response.body().getData() != null) {
                     listaPublicaciones.clear();
-                    listaPublicaciones.addAll(response.body());
+                    listaPublicaciones.addAll(response.body().getData());
                     adapter.notifyDataSetChanged();
                 } else {
                     Toast.makeText(getContext(), "No se pudo cargar el feed", Toast.LENGTH_SHORT).show();
@@ -96,7 +95,8 @@ public class FeedFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(@NonNull Call<List<Publicacion>> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<ApiResponse<List<Publicacion>>> call, @NonNull Throwable t) {
+                if (!isAdded()) return;
                 Toast.makeText(getContext(), "Error de red: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });

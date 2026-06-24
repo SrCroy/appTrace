@@ -8,24 +8,18 @@ import com.example.apptrace.model.activity.IniciarActividadRequest;
 import com.example.apptrace.model.auth.ApiResponse;
 import com.example.apptrace.model.auth.LoginData;
 import com.example.apptrace.model.auth.LoginRequest;
+import com.example.apptrace.model.logro.LogroData;
+import com.example.apptrace.model.logro.MisLogrosResponse;
 import com.example.apptrace.model.profile.ChangePasswordData;
 import com.example.apptrace.model.profile.EditProfileRequest;
 import com.example.apptrace.model.profile.ProfileData;
-import com.example.apptrace.models.Comentario;
-import com.example.apptrace.models.Grupo;
-import com.example.apptrace.models.Publicacion;
-import com.example.apptrace.models.Reaccion;
-import com.example.apptrace.model.logro.LogroData;
-import com.example.apptrace.model.logro.MisLogrosResponse;
 import com.example.apptrace.model.route.EditRouteRequest;
 import com.example.apptrace.model.route.RouteData;
 import com.example.apptrace.model.route.RouteDetail;
-
-import java.util.List;
 import com.example.apptrace.models.Comentario;
 import com.example.apptrace.models.Grupo;
 import com.example.apptrace.models.Publicacion;
-import com.example.apptrace.models.Reaccion;
+import com.example.apptrace.models.ToggleReaccionResponse;
 
 import java.util.List;
 
@@ -35,10 +29,8 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
-import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
-import retrofit2.http.Path;
 import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
@@ -87,39 +79,59 @@ public interface ApiService {
     @POST("avatar/update")
     Call<ApiResponse<Object>> actualizarAvatar(@Part MultipartBody.Part avatar);
 
-    // Obtener el muro de noticias global
+    // ── Módulo 6: Publicaciones (Feed) ────────────────────────────────────────
+
     @GET("publicaciones")
-    Call<List<Publicacion>> getFeedPrincipal();
+    Call<ApiResponse<List<Publicacion>>> getFeedPrincipal();
 
-    // Listar las comunidades sugeridas y unidas
+    @GET("publicaciones/{id}")
+    Call<ApiResponse<Publicacion>> obtenerPublicacion(@Path("id") int id);
+
+    @POST("publicaciones")
+    Call<ApiResponse<Publicacion>> crearPublicacion(@Body Publicacion nuevaPublicacion);
+
+    @PUT("publicaciones/{id}")
+    Call<ApiResponse<Publicacion>> editarPublicacion(@Path("id") int id, @Body Publicacion publicacion);
+
+    @DELETE("publicaciones/{id}")
+    Call<ApiResponse<Object>> eliminarPublicacion(@Path("id") int id);
+
+    @POST("publicaciones/{id}/reaccion")
+    Call<ToggleReaccionResponse> toggleReaccion(@Path("id") int publicacionId);
+
+    @POST("publicaciones/{id}/comentario")
+    Call<ApiResponse<Comentario>> crearComentario(@Path("id") int publicacionId, @Body Comentario comentario);
+
+    // ── Módulo 7: Grupos ──────────────────────────────────────────────────────
+
     @GET("grupos")
-    Call<List<Grupo>> getGrupos();
+    Call<ApiResponse<List<Grupo>>> getGrupos();
 
-    // Obtener los detalles de un grupo específico
     @GET("grupos/{id}")
     Call<ApiResponse<Grupo>> obtenerGrupo(@Path("id") int grupoId);
 
-    // Enviar un comentario en una publicación
-    @POST("comentarios")
-    Call<Comentario> crearComentario(@Body Comentario comentario);
+    @POST("grupos")
+    Call<ApiResponse<Grupo>> crearGrupo(@Body Grupo grupo);
 
-    // Obtener los comentarios de una publicación específica
-    @GET("publicaciones/{id}/comentarios")
-    Call<List<Comentario>> obtenerComentarios(@Path("id") int publicacionId);
+    @POST("grupos/{id}/unirse")
+    Call<ApiResponse<Object>> unirseGrupo(@Path("id") int grupoId);
 
-    // Crear una nueva publicación en el muro global
-    @POST("publicaciones")
-    Call<Publicacion> crearPublicacion(@Body Publicacion nuevaPublicacion);
+    @POST("grupos/{id}/salir")
+    Call<ApiResponse<Object>> salirGrupo(@Path("id") int grupoId);
 
-    // Obtener el muro interno de una comunidad específica
     @GET("grupos/{id}/publicaciones")
-    Call<List<Publicacion>> getPublicacionesGrupo(@Path("id") int grupoId);
+    Call<ApiResponse<List<Publicacion>>> getPublicacionesGrupo(@Path("id") int grupoId);
 
-    // Dar me gusta a una publicación o ruta compartida
-    @POST("reacciones")
-    Call<Reaccion> crearReaccion(@Body Reaccion reaccion);
+    @POST("grupos/{id}/publicaciones")
+    Call<ApiResponse<Publicacion>> publicarEnGrupo(@Path("id") int grupoId, @Body Publicacion publicacion);
 
-    // ── Actividades (Módulo 3) ────────────────────────────────────────────────
+    @POST("grupos/{grupoId}/publicaciones/{pubId}/reaccion")
+    Call<ToggleReaccionResponse> toggleReaccionGrupo(@Path("grupoId") int grupoId, @Path("pubId") int pubId);
+
+    @POST("grupos/{grupoId}/publicaciones/{pubId}/comentario")
+    Call<ApiResponse<Comentario>> crearComentarioGrupo(@Path("grupoId") int grupoId, @Path("pubId") int pubId, @Body Comentario comentario);
+
+    // ── Módulo 3: Actividades y GPS ───────────────────────────────────────────
 
     @POST("actividades/iniciar")
     Call<ApiResponse<ActivityData>> iniciarActividad(@Body IniciarActividadRequest request);
@@ -148,7 +160,7 @@ public interface ApiService {
     @DELETE("actividades/{id}")
     Call<ApiResponse<Object>> eliminarActividad(@Path("id") int actividadId);
 
-    // ── Rutas (Módulo 4) ──────────────────────────────────────────────────────
+    // ── Módulo 4: Rutas ───────────────────────────────────────────────────────
 
     @GET("rutas")
     Call<ApiResponse<List<RouteData>>> listarRutas();
@@ -183,8 +195,7 @@ public interface ApiService {
     Call<ApiResponse<Object>> agregarPuntosRuta(@Path("id") int rutaId, @Body GpsBatch puntos);
 
     @PUT("rutas/{id}")
-    Call<ApiResponse<RouteData>> editarRuta(@Path("id") int rutaId,
-                                             @Body EditRouteRequest request);
+    Call<ApiResponse<RouteData>> editarRuta(@Path("id") int rutaId, @Body EditRouteRequest request);
 
     @DELETE("rutas/{id}")
     Call<ApiResponse<Object>> eliminarRuta(@Path("id") int rutaId);

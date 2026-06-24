@@ -46,7 +46,7 @@ public class GrupoAdapter extends RecyclerView.Adapter<GrupoAdapter.GrupoViewHol
 
         holder.itemView.setOnClickListener(v -> {
             if (listener != null) {
-                listener.onGrupoClick(grupo.getIdGrupo());
+                listener.onGrupoClick(grupo.getId());
             }
         });
     }

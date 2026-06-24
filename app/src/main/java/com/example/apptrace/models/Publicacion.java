@@ -1,13 +1,12 @@
 package com.example.apptrace.models;
 
-import androidx.annotation.NonNull;
-
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class Publicacion {
-    @NonNull
-    @SerializedName("id_publicacion")
-    private int idPublicacion;
+    @SerializedName("id")
+    private int id;
 
     @SerializedName("contenido")
     private String contenido;
@@ -15,32 +14,32 @@ public class Publicacion {
     @SerializedName("privacidad")
     private String privacidad;
 
-    @SerializedName("usuario_id")
-    private int usuarioId;
+    @SerializedName("created_at")
+    private String createdAt;
 
-    @SerializedName("actividad_id")
-    private Integer actividadId;
+    @SerializedName("total_reacciones")
+    private int totalReacciones;
 
-    @SerializedName("ruta_id")
-    private Integer rutaId;
+    @SerializedName("total_comentarios")
+    private int totalComentarios;
 
-    @SerializedName("creado_en")
-    private String creadoEn;
+    @SerializedName("ya_reacciono")
+    private boolean yaReacciono;
 
-    @SerializedName("username")
-    private String userName; // Nombre del usuario que publica
-
-    @SerializedName("likes_count")
-    private int likesCount; // Conteo de reacciones desde el servidor
-
-    @SerializedName("comentarios_count")
-    private int comentariosCount; // Conteo de comentarios
+    @SerializedName("usuario")
+    private UsuarioAnidado usuario;
 
     @SerializedName("actividad")
-    private ActividadAnidada actividad; // Datos de la actividad si existe
+    private ActividadAnidada actividad;
 
-    public int getIdPublicacion() { return idPublicacion; }
-    public void setIdPublicacion(int idPublicacion) { this.idPublicacion = idPublicacion; }
+    @SerializedName("ruta")
+    private RutaAnidada ruta;
+
+    @SerializedName("comentarios")
+    private List<Comentario> comentarios;
+
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
 
     public String getContenido() { return contenido; }
     public void setContenido(String contenido) { this.contenido = contenido; }
@@ -48,40 +47,84 @@ public class Publicacion {
     public String getPrivacidad() { return privacidad; }
     public void setPrivacidad(String privacidad) { this.privacidad = privacidad; }
 
-    public int getUsuarioId() { return usuarioId; }
-    public void setUsuarioId(int usuarioId) { this.usuarioId = usuarioId; }
+    public String getCreatedAt() { return createdAt; }
+    public void setCreatedAt(String createdAt) { this.createdAt = createdAt; }
 
-    public Integer getActividadId() { return actividadId; }
-    public void setActividadId(Integer actividadId) { this.actividadId = actividadId; }
+    public int getTotalReacciones() { return totalReacciones; }
+    public void setTotalReacciones(int totalReacciones) { this.totalReacciones = totalReacciones; }
 
-    public Integer getRutaId() { return rutaId; }
-    public void setRutaId(Integer rutaId) { this.rutaId = rutaId; }
+    public int getTotalComentarios() { return totalComentarios; }
+    public void setTotalComentarios(int totalComentarios) { this.totalComentarios = totalComentarios; }
 
-    public String getCreadoEn() { return creadoEn; }
-    public void setCreadoEn(String creadoEn) { this.creadoEn = creadoEn; }
+    public boolean isYaReacciono() { return yaReacciono; }
+    public void setYaReacciono(boolean yaReacciono) { this.yaReacciono = yaReacciono; }
 
-    public String getUserName() { return userName; }
-    public int getLikesCount() { return likesCount; }
-    public int getComentariosCount() { return comentariosCount; }
+    public UsuarioAnidado getUsuario() { return usuario; }
+    public void setUsuario(UsuarioAnidado usuario) { this.usuario = usuario; }
+
     public ActividadAnidada getActividad() { return actividad; }
+    public void setActividad(ActividadAnidada actividad) { this.actividad = actividad; }
 
-    // Clase interna para mapear la actividad asociada
+    public RutaAnidada getRuta() { return ruta; }
+    public void setRuta(RutaAnidada ruta) { this.ruta = ruta; }
+
+    public List<Comentario> getComentarios() { return comentarios; }
+    public void setComentarios(List<Comentario> comentarios) { this.comentarios = comentarios; }
+
+    public static class UsuarioAnidado {
+        @SerializedName("id")
+        private int id;
+        @SerializedName("username")
+        private String username;
+        @SerializedName("nombre")
+        private String nombre;
+        @SerializedName("apellido")
+        private String apellido;
+        @SerializedName("avatar")
+        private String avatar;
+
+        public int getId() { return id; }
+        public String getUsername() { return username; }
+        public String getNombre() { return nombre; }
+        public String getApellido() { return apellido; }
+        public String getAvatar() { return avatar; }
+    }
+
     public static class ActividadAnidada {
+        @SerializedName("id")
+        private int id;
+        @SerializedName("titulo")
+        private String titulo;
         @SerializedName("tipo_deporte")
         private String tipoDeporte;
-
         @SerializedName("distancia_km")
         private double distanciaKm;
-
         @SerializedName("duracion_seg")
         private double duracionSeg;
+        @SerializedName("calorias")
+        private double calorias;
 
-        @SerializedName("ritmo_promedio")
-        private double ritmoPromedio;
-
+        public int getId() { return id; }
+        public String getTitulo() { return titulo; }
         public String getTipoDeporte() { return tipoDeporte; }
         public double getDistanciaKm() { return distanciaKm; }
         public double getDuracionSeg() { return duracionSeg; }
-        public double getRitmoPromedio() { return ritmoPromedio; }
+        public double getCalorias() { return calorias; }
+    }
+
+    public static class RutaAnidada {
+        @SerializedName("id")
+        private int id;
+        @SerializedName("nombre")
+        private String nombre;
+        @SerializedName("distancia_km")
+        private double distanciaKm;
+        @SerializedName("dificultad")
+        private String dificultad;
+
+        public int getId() { return id; }
+        public String getNombre() { return nombre; }
+        public double getDistanciaKm() { return distanciaKm; }
+        public String getDificultad() { return dificultad; }
     }
 }

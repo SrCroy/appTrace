@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.apptrace.model.auth.ApiResponse;
 import com.example.apptrace.models.Grupo;
 import com.example.apptrace.network.ApiService;
 import com.example.apptrace.network.RetrofitClient;
@@ -101,14 +102,14 @@ public class GruposFragment extends Fragment {
     }
 
     private void cargarGrupos() {
-        apiService.getGrupos().enqueue(new Callback<List<Grupo>>() {
+        apiService.getGrupos().enqueue(new Callback<ApiResponse<List<Grupo>>>() {
             @Override
-            public void onResponse(@NonNull Call<List<Grupo>> call, @NonNull Response<List<Grupo>> response) {
-                if (!isAdded()) return; // Protección vital en Fragments
+            public void onResponse(@NonNull Call<ApiResponse<List<Grupo>>> call, @NonNull Response<ApiResponse<List<Grupo>>> response) {
+                if (!isAdded()) return;
 
-                if (response.isSuccessful() && response.body() != null) {
+                if (response.isSuccessful() && response.body() != null && response.body().getData() != null) {
                     listaGrupos.clear();
-                    listaGrupos.addAll(response.body());
+                    listaGrupos.addAll(response.body().getData());
                     adapter.notifyDataSetChanged();
                 } else {
                     Toast.makeText(requireContext(), "Error al cargar comunidades", Toast.LENGTH_SHORT).show();
@@ -116,7 +117,7 @@ public class GruposFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(@NonNull Call<List<Grupo>> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<ApiResponse<List<Grupo>>> call, @NonNull Throwable t) {
                 if (!isAdded()) return;
                 Toast.makeText(requireContext(), "Fallo de conexión", Toast.LENGTH_SHORT).show();
             }

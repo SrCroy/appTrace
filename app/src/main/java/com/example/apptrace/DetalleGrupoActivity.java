@@ -80,11 +80,7 @@ public class DetalleGrupoActivity extends AppCompatActivity {
         flBack.setOnClickListener(v -> finish());
         flShare.setOnClickListener(v -> Toast.makeText(this, "Compartir grupo...", Toast.LENGTH_SHORT).show());
 
-        // Botón unirse
-        btnJoinGroup.setOnClickListener(v -> {
-            Toast.makeText(this, "Solicitud para unirse enviada", Toast.LENGTH_SHORT).show();
-            // Aquí llamarías a un endpoint como apiService.unirseGrupo(grupoId);
-        });
+        btnJoinGroup.setOnClickListener(v -> unirseAlGrupo());
     }
 
     private void configurarRecyclerView() {
@@ -155,6 +151,14 @@ public class DetalleGrupoActivity extends AppCompatActivity {
                     Grupo grupo = response.body().getData();
                     tvGroupName.setText(grupo.getNombre());
                     tvGroupDescription.setText(grupo.getDescripcion());
+                    tvGroupSport.setText(grupo.getPrivacidad());
+                    if (grupo.isEsMiembro()) {
+                        btnJoinGroup.setText("Salir del grupo");
+                        btnJoinGroup.setOnClickListener(v -> salirDelGrupo());
+                    } else {
+                        btnJoinGroup.setText("Unirse");
+                        btnJoinGroup.setOnClickListener(v -> unirseAlGrupo());
+                    }
                 }
             }
 
@@ -166,12 +170,12 @@ public class DetalleGrupoActivity extends AppCompatActivity {
     }
 
     private void cargarPublicacionesDelGrupo() {
-        apiService.getPublicacionesGrupo(grupoId).enqueue(new Callback<List<Publicacion>>() {
+        apiService.getPublicacionesGrupo(grupoId).enqueue(new Callback<ApiResponse<List<Publicacion>>>() {
             @Override
-            public void onResponse(@NonNull Call<List<Publicacion>> call, @NonNull Response<List<Publicacion>> response) {
-                if (response.isSuccessful() && response.body() != null) {
+            public void onResponse(@NonNull Call<ApiResponse<List<Publicacion>>> call, @NonNull Response<ApiResponse<List<Publicacion>>> response) {
+                if (response.isSuccessful() && response.body() != null && response.body().getData() != null) {
                     listaPublicaciones.clear();
-                    listaPublicaciones.addAll(response.body());
+                    listaPublicaciones.addAll(response.body().getData());
                     adapter.notifyDataSetChanged();
                 } else {
                     Toast.makeText(DetalleGrupoActivity.this, "No hay publicaciones aún", Toast.LENGTH_SHORT).show();
@@ -179,8 +183,49 @@ public class DetalleGrupoActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(@NonNull Call<List<Publicacion>> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<ApiResponse<List<Publicacion>>> call, @NonNull Throwable t) {
                 Toast.makeText(DetalleGrupoActivity.this, "Error al cargar feed", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void unirseAlGrupo() {
+        apiService.unirseGrupo(grupoId).enqueue(new Callback<ApiResponse<Object>>() {
+            @Override
+            public void onResponse(@NonNull Call<ApiResponse<Object>> call, @NonNull Response<ApiResponse<Object>> response) {
+                if (response.isSuccessful() && response.body() != null && response.body().isSuccess()) {
+                    Toast.makeText(DetalleGrupoActivity.this, "Te has unido al grupo", Toast.LENGTH_SHORT).show();
+                    btnJoinGroup.setText("Salir del grupo");
+                    btnJoinGroup.setOnClickListener(v -> salirDelGrupo());
+                    cargarPublicacionesDelGrupo();
+                } else {
+                    Toast.makeText(DetalleGrupoActivity.this, "No se pudo unir al grupo", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ApiResponse<Object>> call, @NonNull Throwable t) {
+                Toast.makeText(DetalleGrupoActivity.this, "Error de red", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void salirDelGrupo() {
+        apiService.salirGrupo(grupoId).enqueue(new Callback<ApiResponse<Object>>() {
+            @Override
+            public void onResponse(@NonNull Call<ApiResponse<Object>> call, @NonNull Response<ApiResponse<Object>> response) {
+                if (response.isSuccessful() && response.body() != null && response.body().isSuccess()) {
+                    Toast.makeText(DetalleGrupoActivity.this, "Has salido del grupo", Toast.LENGTH_SHORT).show();
+                    btnJoinGroup.setText("Unirse");
+                    btnJoinGroup.setOnClickListener(v -> unirseAlGrupo());
+                } else {
+                    Toast.makeText(DetalleGrupoActivity.this, "No se pudo salir del grupo", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ApiResponse<Object>> call, @NonNull Throwable t) {
+                Toast.makeText(DetalleGrupoActivity.this, "Error de red", Toast.LENGTH_SHORT).show();
             }
         });
     }

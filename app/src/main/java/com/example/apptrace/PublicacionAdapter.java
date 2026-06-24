@@ -7,9 +7,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.apptrace.R;
 import com.example.apptrace.models.Publicacion;
-import com.example.apptrace.models.Reaccion;
+import com.example.apptrace.models.ToggleReaccionResponse;
 import com.example.apptrace.network.ApiService;
 import com.example.apptrace.network.RetrofitClient;
 
@@ -47,59 +46,52 @@ public class PublicacionAdapter extends RecyclerView.Adapter<PublicacionAdapter.
     public void onBindViewHolder(@NonNull PublicacionViewHolder holder, int position) {
         Publicacion p = listaPublicaciones.get(position);
 
-        holder.tvUserName.setText(p.getUserName() != null ? p.getUserName() : "Usuario " + p.getUsuarioId());
-        holder.tvTime.setText(p.getCreadoEn());
+        String username = (p.getUsuario() != null) ? p.getUsuario().getUsername() : "";
+        holder.tvUserName.setText(username);
+        holder.tvTime.setText(p.getCreatedAt());
         holder.tvContenidoPost.setText(p.getContenido());
 
-        // Contadores de interacciones sociales
-        holder.tvLikeCount.setText(String.valueOf(p.getLikesCount()));
-        holder.tvCommentCount.setText(String.valueOf(p.getComentariosCount()));
+        holder.tvLikeCount.setText(String.valueOf(p.getTotalReacciones()));
+        holder.tvCommentCount.setText(String.valueOf(p.getTotalComentarios()));
 
-        // Verificar si la publicación incluye datos deportivos
         if (p.getActividad() != null) {
-            // Habilitamos el contenedor de estadísticas si existe actividad
             holder.itemView.findViewById(R.id.ll_stats).setVisibility(View.VISIBLE);
             holder.itemView.findViewById(R.id.tv_activity_type).setVisibility(View.VISIBLE);
-
             holder.ivMapPreview.setVisibility(View.VISIBLE);
 
             Publicacion.ActividadAnidada act = p.getActividad();
             holder.tvActivityType.setText(act.getTipoDeporte());
             holder.tvStatDistance.setText(String.format("%.2f km", act.getDistanciaKm()));
 
-            // Convertir segundos a formato mm:ss o hh:mm:ss si es necesario
             int minutos = (int) (act.getDuracionSeg() / 60);
             int segundos = (int) (act.getDuracionSeg() % 60);
             holder.tvStatTime.setText(String.format("%02d:%02d", minutos, segundos));
-
-            holder.tvStatPace.setText(String.format("%.2f /km", act.getRitmoPromedio()));
+            holder.tvStatPace.setText("");
         } else {
-            // Si es solo un mensaje de texto, ocultamos los campos de métricas deportivas
             holder.itemView.findViewById(R.id.ll_stats).setVisibility(View.GONE);
             holder.itemView.findViewById(R.id.tv_activity_type).setVisibility(View.GONE);
-            holder.ivMapPreview.setVisibility(View.GONE); // Oculta el recuadro del mapa
+            holder.ivMapPreview.setVisibility(View.GONE);
         }
 
         View.OnClickListener irAlPerfil = v -> {
-            if (listener != null) listener.onUsuarioClick(p.getUsuarioId());
+            if (listener != null && p.getUsuario() != null) {
+                listener.onUsuarioClick(p.getUsuario().getId());
+            }
         };
         holder.flAvatar.setOnClickListener(irAlPerfil);
         holder.tvUserName.setOnClickListener(irAlPerfil);
 
-        if (p.getRutaId() != null) {
+        if (p.getRuta() != null) {
             holder.ivMapPreview.setOnClickListener(v -> {
-                if (listener != null) listener.onRutaClick(p.getRutaId());
+                if (listener != null) listener.onRutaClick(p.getRuta().getId());
             });
         }
 
         holder.ivComment.setOnClickListener(v -> {
-            if (listener != null) listener.onComentarioClick(p.getIdPublicacion());
+            if (listener != null) listener.onComentarioClick(p.getId());
         });
 
-        // Lógica del Like
-        holder.ivLike.setOnClickListener(v -> {
-            darLike(p.getIdPublicacion(), holder);
-        });
+        holder.ivLike.setOnClickListener(v -> darLike(p, holder));
     }
 
     @Override
@@ -107,26 +99,25 @@ public class PublicacionAdapter extends RecyclerView.Adapter<PublicacionAdapter.
         return listaPublicaciones != null ? listaPublicaciones.size() : 0;
     }
 
-    // Método para llamar a la API de reacciones
-    private void darLike(int publicacionId, PublicacionViewHolder holder) {
-        Reaccion reaccion = new Reaccion();
-        reaccion.setReaccionableId(publicacionId);
-        reaccion.setReaccionableTipo("App\\Models\\Publicacion");
-
+    private void darLike(Publicacion publicacion, PublicacionViewHolder holder) {
         ApiService api = RetrofitClient.getClient().create(ApiService.class);
-        api.crearReaccion(reaccion).enqueue(new Callback<Reaccion>() {
+        api.toggleReaccion(publicacion.getId()).enqueue(new Callback<ToggleReaccionResponse>() {
             @Override
-            public void onResponse(Call<Reaccion> call, Response<Reaccion> response) {
-                if (response.isSuccessful()) {
-                    // Éxito: cambiamos visualmente el corazón
-                    holder.ivLike.setColorFilter(holder.itemView.getContext().getResources().getColor(R.color.diff_hard));
+            public void onResponse(@NonNull Call<ToggleReaccionResponse> call, @NonNull Response<ToggleReaccionResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    ToggleReaccionResponse res = response.body();
+                    publicacion.setTotalReacciones(res.getTotalReacciones());
+                    publicacion.setYaReacciono(res.isReaccionado());
+                    holder.tvLikeCount.setText(String.valueOf(res.getTotalReacciones()));
+                    int color = res.isReaccionado()
+                            ? holder.itemView.getContext().getResources().getColor(R.color.diff_hard)
+                            : holder.itemView.getContext().getResources().getColor(android.R.color.darker_gray);
+                    holder.ivLike.setColorFilter(color);
                 }
             }
 
             @Override
-            public void onFailure(Call<Reaccion> call, Throwable t) {
-
-            }
+            public void onFailure(@NonNull Call<ToggleReaccionResponse> call, @NonNull Throwable t) {}
         });
     }
 

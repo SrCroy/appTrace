@@ -27,11 +27,10 @@ public class ComentarioAdapter extends RecyclerView.Adapter<ComentarioAdapter.Co
     @Override
     public void onBindViewHolder(@NonNull ComentarioViewHolder holder, int position) {
         Comentario c = listaComentarios.get(position);
-        holder.tvAutor.setText("Usuario " + c.getUsuarioId());
+        String username = (c.getUsuario() != null) ? c.getUsuario().getUsername() : "Usuario";
+        holder.tvAutor.setText(username);
         holder.tvCuerpo.setText(c.getCuerpo());
-
-        // Simular iniciales
-        holder.tvIniciales.setText("U");
+        holder.tvIniciales.setText(username.isEmpty() ? "U" : username.substring(0, 1).toUpperCase());
     }
 
     @Override

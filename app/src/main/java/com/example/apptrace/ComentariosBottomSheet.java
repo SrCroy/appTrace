@@ -13,7 +13,9 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.apptrace.model.auth.ApiResponse;
 import com.example.apptrace.models.Comentario;
+import com.example.apptrace.models.Publicacion;
 import com.example.apptrace.network.ApiService;
 import com.example.apptrace.network.RetrofitClient;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
@@ -37,7 +39,6 @@ public class ComentariosBottomSheet extends BottomSheetDialogFragment {
     private List<Comentario> listaComentarios = new ArrayList<>();
     private ApiService apiService;
 
-    // Patrón recomendado para pasar argumentos a un Fragmento
     public static ComentariosBottomSheet newInstance(int publicacionId) {
         ComentariosBottomSheet fragment = new ComentariosBottomSheet();
         Bundle args = new Bundle();
@@ -77,15 +78,18 @@ public class ComentariosBottomSheet extends BottomSheetDialogFragment {
     }
 
     private void cargarComentarios() {
-        apiService.obtenerComentarios(publicacionId).enqueue(new Callback<List<Comentario>>() {
+        // GET /publicaciones/{id} devuelve la publicación con sus comentarios embebidos
+        apiService.obtenerPublicacion(publicacionId).enqueue(new Callback<ApiResponse<Publicacion>>() {
             @Override
-            public void onResponse(Call<List<Comentario>> call, Response<List<Comentario>> response) {
-                if (response.isSuccessful() && response.body() != null) {
+            public void onResponse(@NonNull Call<ApiResponse<Publicacion>> call, @NonNull Response<ApiResponse<Publicacion>> response) {
+                if (!isAdded()) return;
+                if (response.isSuccessful() && response.body() != null && response.body().getData() != null) {
+                    List<Comentario> comentarios = response.body().getData().getComentarios();
                     listaComentarios.clear();
-                    listaComentarios.addAll(response.body());
+                    if (comentarios != null) {
+                        listaComentarios.addAll(comentarios);
+                    }
                     adapter.notifyDataSetChanged();
-
-                    // Hacer scroll automático al final si hay comentarios
                     if (!listaComentarios.isEmpty()) {
                         rvComentarios.scrollToPosition(listaComentarios.size() - 1);
                     }
@@ -93,7 +97,8 @@ public class ComentariosBottomSheet extends BottomSheetDialogFragment {
             }
 
             @Override
-            public void onFailure(Call<List<Comentario>> call, Throwable t) {
+            public void onFailure(@NonNull Call<ApiResponse<Publicacion>> call, @NonNull Throwable t) {
+                if (!isAdded()) return;
                 Toast.makeText(getContext(), "Error al cargar comentarios", Toast.LENGTH_SHORT).show();
             }
         });
@@ -103,20 +108,17 @@ public class ComentariosBottomSheet extends BottomSheetDialogFragment {
         String texto = etNuevoComentario.getText().toString().trim();
         if (texto.isEmpty()) return;
 
-        // Limpiar el campo inmediatamente para que la UI se sienta ágil
         etNuevoComentario.setText("");
 
         Comentario nuevo = new Comentario();
         nuevo.setCuerpo(texto);
-        nuevo.setComentableId(publicacionId);
-        nuevo.setComentableTipo("App\\Models\\Publicacion");
 
-        apiService.crearComentario(nuevo).enqueue(new Callback<Comentario>() {
+        apiService.crearComentario(publicacionId, nuevo).enqueue(new Callback<ApiResponse<Comentario>>() {
             @Override
-            public void onResponse(Call<Comentario> call, Response<Comentario> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    // Agregamos el comentario devuelto a la lista y recargamos
-                    listaComentarios.add(response.body());
+            public void onResponse(@NonNull Call<ApiResponse<Comentario>> call, @NonNull Response<ApiResponse<Comentario>> response) {
+                if (!isAdded()) return;
+                if (response.isSuccessful() && response.body() != null && response.body().getData() != null) {
+                    listaComentarios.add(response.body().getData());
                     adapter.notifyItemInserted(listaComentarios.size() - 1);
                     rvComentarios.scrollToPosition(listaComentarios.size() - 1);
                 } else {
@@ -125,7 +127,8 @@ public class ComentariosBottomSheet extends BottomSheetDialogFragment {
             }
 
             @Override
-            public void onFailure(Call<Comentario> call, Throwable t) {
+            public void onFailure(@NonNull Call<ApiResponse<Comentario>> call, @NonNull Throwable t) {
+                if (!isAdded()) return;
                 Toast.makeText(getContext(), "Fallo de conexión", Toast.LENGTH_SHORT).show();
             }
         });

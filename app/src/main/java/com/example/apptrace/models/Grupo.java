@@ -3,8 +3,8 @@ package com.example.apptrace.models;
 import com.google.gson.annotations.SerializedName;
 
 public class Grupo {
-    @SerializedName("idGrupo")
-    private int idGrupo;
+    @SerializedName("id")
+    private int id;
 
     @SerializedName("nombre")
     private String nombre;
@@ -21,87 +21,54 @@ public class Grupo {
     @SerializedName("total_miembros")
     private int totalMiembros;
 
-    @SerializedName("propietario_id")
-    private int propietarioId;
+    @SerializedName("es_miembro")
+    private boolean esMiembro;
 
-    @SerializedName("creado_en")
-    private String creadoEn;
+    @SerializedName("propietario")
+    private PropietarioAnidado propietario;
 
-    @SerializedName("actualizado_en")
-    private String actualizadoEn;
+    @SerializedName("created_at")
+    private String createdAt;
 
-    public Grupo() {
-    }
+    public Grupo() {}
 
-    public int getIdGrupo() {
-        return idGrupo;
-    }
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
 
-    public void setIdGrupo(int idGrupo) {
-        this.idGrupo = idGrupo;
-    }
+    public String getNombre() { return nombre; }
+    public void setNombre(String nombre) { this.nombre = nombre; }
 
-    public String getNombre() {
-        return nombre;
-    }
+    public String getDescripcion() { return descripcion; }
+    public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
+    public String getAvatar() { return avatar; }
+    public void setAvatar(String avatar) { this.avatar = avatar; }
 
-    public String getDescripcion() {
-        return descripcion;
-    }
+    public String getPrivacidad() { return privacidad; }
+    public void setPrivacidad(String privacidad) { this.privacidad = privacidad; }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
+    public int getTotalMiembros() { return totalMiembros; }
+    public void setTotalMiembros(int totalMiembros) { this.totalMiembros = totalMiembros; }
 
-    public String getAvatar() {
-        return avatar;
-    }
+    public boolean isEsMiembro() { return esMiembro; }
+    public void setEsMiembro(boolean esMiembro) { this.esMiembro = esMiembro; }
 
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
+    public PropietarioAnidado getPropietario() { return propietario; }
+    public void setPropietario(PropietarioAnidado propietario) { this.propietario = propietario; }
 
-    public String getPrivacidad() {
-        return privacidad;
-    }
+    public String getCreatedAt() { return createdAt; }
+    public void setCreatedAt(String createdAt) { this.createdAt = createdAt; }
 
-    public void setPrivacidad(String privacidad) {
-        this.privacidad = privacidad;
-    }
+    public static class PropietarioAnidado {
+        @SerializedName("id")
+        private int id;
+        @SerializedName("username")
+        private String username;
+        @SerializedName("avatar")
+        private String avatar;
 
-    public int getTotalMiembros() {
-        return totalMiembros;
-    }
-
-    public void setTotalMiembros(int totalMiembros) {
-        this.totalMiembros = totalMiembros;
-    }
-
-    public int getPropietarioId() {
-        return propietarioId;
-    }
-
-    public void setPropietarioId(int propietarioId) {
-        this.propietarioId = propietarioId;
-    }
-
-    public String getCreadoEn() {
-        return creadoEn;
-    }
-
-    public void setCreadoEn(String creadoEn) {
-        this.creadoEn = creadoEn;
-    }
-
-    public String getActualizadoEn() {
-        return actualizadoEn;
-    }
-
-    public void setActualizadoEn(String actualizadoEn) {
-        this.actualizadoEn = actualizadoEn;
+        public int getId() { return id; }
+        public String getUsername() { return username; }
+        public String getAvatar() { return avatar; }
     }
 }
