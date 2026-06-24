@@ -1,87 +1,91 @@
 package com.example.apptrace;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-import androidx.fragment.app.Fragment;
+
+import com.example.apptrace.session.SessionManager;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MainActivity extends AppCompatActivity {
-    private LinearLayout tabFeed, tabRutas, tabGrupos, tabPerfil;
+
+    private LinearLayout llFeed, llRoutes, llGroups, llProfile;
+    private FloatingActionButton fabTrack;
+    private ImageView ivNotifications, ivSearch;
+    private SessionManager sessionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
+
+        sessionManager = SessionManager.getInstance(this);
+
+        llFeed          = findViewById(R.id.ll_bottom_nav).findViewWithTag(null);
+        ivNotifications = findViewById(R.id.iv_notifications);
+        ivSearch        = findViewById(R.id.iv_search);
+        fabTrack        = findViewById(R.id.fab_track_activity);
+
+        // Logout al mantener presionado el ícono de perfil
+        LinearLayout llBottomNav = findViewById(R.id.ll_bottom_nav);
+
+        // Tab perfil es el 4to hijo del bottom nav (índice 3, saltando el View vacío del FAB)
+        llBottomNav.getChildAt(4).setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                sessionManager.logout();
+                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                finish();
+                return true;
+            }
         });
 
-        tabFeed = findViewById(R.id.tab_feed);
-        tabRutas = findViewById(R.id.tab_rutas);
-        tabGrupos = findViewById(R.id.tab_grupos);
-        tabPerfil = findViewById(R.id.tab_perfil);
-
-        tabFeed.setOnClickListener(v -> {
-            cargarFragmento(new FeedFragment());
-            actualizarColoresMenu(tabFeed);
-        });
-        tabRutas.setOnClickListener(v -> {
-            cargarFragmento(new RutasFragment());
-            actualizarColoresMenu(tabRutas);
-        });
-        tabGrupos.setOnClickListener(v -> {
-            cargarFragmento(new GruposFragment());
-            actualizarColoresMenu(tabGrupos);
-        });
-        tabPerfil.setOnClickListener(v -> {
-            cargarFragmento(new PerfilFragment());
-            actualizarColoresMenu(tabPerfil);
+        // Tab perfil click normal → abre PerfilActivity
+        llBottomNav.getChildAt(4).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, PerfilActivity.class));
+            }
         });
 
-        // Estado inicial por defecto
-        if (savedInstanceState == null) {
-            cargarFragmento(new FeedFragment());
-            actualizarColoresMenu(tabFeed);
-        }
-    }
+        llBottomNav.getChildAt(1).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(MainActivity.this, "Rutas — próximamente", Toast.LENGTH_SHORT).show();
+            }
+        });
 
-    private void cargarFragmento(Fragment fragment) {
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, fragment)
-                .commit();
-    }
+        llBottomNav.getChildAt(3).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(MainActivity.this, "Grupos — próximamente", Toast.LENGTH_SHORT).show();
+            }
+        });
 
-    // Lógica visual para encender el tab tocado y apagar los demás
-    private void actualizarColoresMenu(LinearLayout tabSeleccionado) {
-        restaurarColor(tabFeed);
-        restaurarColor(tabRutas);
-        restaurarColor(tabGrupos);
-        restaurarColor(tabPerfil);
+        ivNotifications.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(MainActivity.this, "Notificaciones — próximamente", Toast.LENGTH_SHORT).show();
+            }
+        });
 
-        ImageView icono = (ImageView) tabSeleccionado.getChildAt(0);
-        TextView texto = (TextView) tabSeleccionado.getChildAt(1);
+        ivSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(MainActivity.this, "Búsqueda — próximamente", Toast.LENGTH_SHORT).show();
+            }
+        });
 
-        icono.setColorFilter(ContextCompat.getColor(this, R.color.primary));
-        texto.setTextColor(ContextCompat.getColor(this, R.color.primary));
-    }
-
-    // Lógica visual para poner un tab en estado inactivo
-    private void restaurarColor(LinearLayout tab) {
-        ImageView icono = (ImageView) tab.getChildAt(0);
-        TextView texto = (TextView) tab.getChildAt(1);
-
-        icono.setColorFilter(ContextCompat.getColor(this, R.color.text_secondary));
-        texto.setTextColor(ContextCompat.getColor(this, R.color.text_secondary));
+        fabTrack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(MainActivity.this, "Tracking — próximamente", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

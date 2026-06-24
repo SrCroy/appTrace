@@ -2,7 +2,6 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background">
@@ -29,13 +28,13 @@
             android:layout_weight="1"
             android:layout_marginStart="@dimen/space_md"
             android:fontFamily="@font/dm_sans"
-            android:text="Crear nueva ruta"
+            android:text="Editar ruta"
             android:textColor="@color/text_primary"
             android:textSize="@dimen/text_lg"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/tv_save_route"
+            android:id="@+id/tv_save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/dm_sans"
@@ -59,70 +58,13 @@
             android:orientation="vertical"
             android:padding="@dimen/screen_padding">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/dm_sans"
-                android:text="Ubicación y trazado"
-                android:textColor="@color/text_primary"
-                android:textStyle="bold" />
-
-            <com.google.android.material.card.MaterialCardView
-                style="@style/Widget.Trace.CardView"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_marginTop="@dimen/space_md"
-                android:layout_marginBottom="@dimen/space_md"
-                app:cardBackgroundColor="@color/surface_2">
-
-                <!-- Contenedor del mapa (visible solo cuando hay trazado) -->
-                <FrameLayout
-                    android:id="@+id/fl_map_preview"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:visibility="gone" />
-
-                <!-- Overlay: botón centrado cuando no hay mapa todavía -->
-                <FrameLayout
-                    android:id="@+id/fl_map_placeholder"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/surface_3">
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btn_select_on_map"
-                        style="@style/Widget.Trace.Button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="Trazar en el mapa"
-                        android:textSize="@dimen/text_sm"
-                        app:icon="@drawable/ic_launcher_foreground" />
-                </FrameLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <!-- Botón redibujar (visible solo tras trazar) -->
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_retrazar"
-                style="@style/Widget.Trace.Button"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginBottom="@dimen/space_xl"
-                android:backgroundTint="@color/surface_2"
-                android:textColor="@color/text_secondary"
-                android:text="↩ Volver a trazar"
-                android:textSize="13sp"
-                android:visibility="gone"
-                app:cornerRadius="10dp" />
-
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.Trace.TextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Nombre de la ruta"
-                app:startIconTint="@color/text_secondary">
+                android:hint="Nombre de la ruta">
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_route_name"
+                    android:id="@+id/et_nombre"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textCapSentences"
@@ -134,10 +76,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/space_md"
-                android:hint="Descripción o recomendaciones"
-                app:startIconTint="@color/text_secondary">
+                android:hint="Descripción o recomendaciones">
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_route_desc"
+                    android:id="@+id/et_desc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textMultiLine|textCapSentences"
@@ -152,7 +93,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/space_md"
                 android:hint="Tipo de deporte"
-                app:startIconTint="@color/text_secondary"
                 app:boxBackgroundColor="@color/surface_3"
                 app:boxStrokeColor="@color/border"
                 app:boxCornerRadiusTopStart="12dp"
@@ -160,12 +100,11 @@
                 app:boxCornerRadiusBottomStart="12dp"
                 app:boxCornerRadiusBottomEnd="12dp">
                 <AutoCompleteTextView
-                    android:id="@+id/act_route_sport"
+                    android:id="@+id/act_sport"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="none"
-                    android:textColor="@color/text_primary"
-                    android:text="Trail Running" />
+                    android:textColor="@color/text_primary" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -174,7 +113,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/space_md"
                 android:hint="Nivel de dificultad (1-6)"
-                app:startIconTint="@color/text_secondary"
                 app:boxBackgroundColor="@color/surface_3"
                 app:boxStrokeColor="@color/border"
                 app:boxCornerRadiusTopStart="12dp"
@@ -182,12 +120,11 @@
                 app:boxCornerRadiusBottomStart="12dp"
                 app:boxCornerRadiusBottomEnd="12dp">
                 <AutoCompleteTextView
-                    android:id="@+id/act_route_difficulty"
+                    android:id="@+id/act_diff"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="none"
-                    android:textColor="@color/text_primary"
-                    android:text="3 - Moderado" />
+                    android:textColor="@color/text_primary" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -196,7 +133,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/space_md"
                 android:hint="Privacidad"
-                app:startIconTint="@color/text_secondary"
                 app:boxBackgroundColor="@color/surface_3"
                 app:boxStrokeColor="@color/border"
                 app:boxCornerRadiusTopStart="12dp"
@@ -204,22 +140,33 @@
                 app:boxCornerRadiusBottomStart="12dp"
                 app:boxCornerRadiusBottomEnd="12dp">
                 <AutoCompleteTextView
-                    android:id="@+id/act_route_privacy"
+                    android:id="@+id/act_privacy"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="none"
-                    android:textColor="@color/text_primary"
-                    android:text="Público" />
+                    android:textColor="@color/text_primary" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_create_route_submit"
+                android:id="@+id/btn_guardar"
                 style="@style/Widget.Trace.Button"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/btn_height"
                 android:layout_marginTop="@dimen/space_xl"
-                android:text="Publicar Ruta"
+                android:text="Guardar cambios"
                 android:textSize="@dimen/text_base" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_eliminar"
+                style="@style/Widget.Trace.Button"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/btn_height"
+                android:layout_marginTop="@dimen/space_md"
+                android:backgroundTint="#1AFF4444"
+                android:textColor="#FF4444"
+                android:text="Eliminar ruta"
+                android:textSize="@dimen/text_base" />
+
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
