@@ -1,4 +1,4 @@
-package com.example.apptrace;
+package com.example.apptrace.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +8,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.apptrace.R;
 import com.example.apptrace.model.activity.ActivityData;
 
 import java.text.ParseException;

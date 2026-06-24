@@ -124,7 +124,7 @@ public class EditarPerfilActivity extends AppCompatActivity {
 
         if (perfil.getAvatar() != null && !perfil.getAvatar().isEmpty()) {
             Glide.with(this)
-                    .load(perfil.getAvatar())
+                    .load(RetrofitClient.storageUrl(perfil.getAvatar()))
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .skipMemoryCache(true)
                     .into(ivEditAvatar);
@@ -326,6 +326,12 @@ public class EditarPerfilActivity extends AppCompatActivity {
     }
 
     private void subirAvatar(Uri uri) {
+        // Mostrar la imagen elegida de inmediato sin esperar al servidor
+        ivEditAvatar.setImageURI(uri);
+        ivEditAvatar.setImageTintList(null);
+        ivEditAvatar.setVisibility(View.VISIBLE);
+        tvEditAvatarInitials.setVisibility(View.GONE);
+
         MultipartBody.Part part;
         try {
             part = crearPartAvatar(uri);
@@ -342,20 +348,19 @@ public class EditarPerfilActivity extends AppCompatActivity {
                         && response.body().isSuccess()) {
                     Toast.makeText(EditarPerfilActivity.this,
                             "Foto actualizada", Toast.LENGTH_SHORT).show();
-                    ivEditAvatar.setImageURI(uri);
-                    ivEditAvatar.setImageTintList(null);
-                    ivEditAvatar.setVisibility(View.VISIBLE);
-                    tvEditAvatarInitials.setVisibility(View.GONE);
+                    setResult(RESULT_OK);
                 } else {
                     Toast.makeText(EditarPerfilActivity.this,
-                            "Error al subir la foto", Toast.LENGTH_SHORT).show();
+                            "No se pudo guardar la foto en el servidor",
+                            Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
             public void onFailure(Call<ApiResponse<Object>> call, Throwable t) {
                 Toast.makeText(EditarPerfilActivity.this,
-                        "Error de red: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                        "Error de red al subir foto: " + t.getMessage(),
+                        Toast.LENGTH_LONG).show();
             }
         });
     }
