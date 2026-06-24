@@ -45,11 +45,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Tab perfil click normal — placeholder por ahora
+        // Tab perfil click normal → abre PerfilActivity
         llBottomNav.getChildAt(4).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MainActivity.this, "Perfil — próximamente", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(MainActivity.this, PerfilActivity.class));
             }
         });
 

@@ -76,10 +76,13 @@
                     android:layout_height="@dimen/avatar_xl"
                     android:background="@drawable/bg_avatar"
                     android:backgroundTint="@color/purple"
+                    android:outlineProvider="background"
+                    android:clipToOutline="true"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintEnd_toEndOf="parent">
                     <TextView
+                        android:id="@+id/tv_edit_avatar_initials"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -88,6 +91,12 @@
                         android:textSize="@dimen/text_2xl"
                         android:textStyle="bold"
                         tools:text="CM" />
+                    <ImageView
+                        android:id="@+id/iv_edit_avatar"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:visibility="gone" />
                 </FrameLayout>
 
                 <FrameLayout
@@ -108,56 +117,34 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/til_edit_name"
+                android:id="@+id/til_edit_nombre"
                 style="@style/Widget.Trace.TextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Nombre completo"
+                android:hint="Nombre"
                 app:startIconTint="@color/text_secondary">
-
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_edit_name"
+                    android:id="@+id/et_edit_nombre"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName|textCapWords"
-                    android:textColor="@color/text_primary"
-                    tools:text="Carlos Méndez" />
+                    android:textColor="@color/text_primary" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/til_edit_username"
+                android:id="@+id/til_edit_apellido"
                 style="@style/Widget.Trace.TextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/space_md"
-                android:hint="Nombre de usuario"
+                android:hint="Apellido"
                 app:startIconTint="@color/text_secondary">
-
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_edit_username"
+                    android:id="@+id/et_edit_apellido"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textEmailAddress"
-                    android:textColor="@color/text_primary"
-                    tools:text="cmenddez" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/til_edit_location"
-                style="@style/Widget.Trace.TextInputLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/space_md"
-                android:hint="Ubicación"
-                app:startIconTint="@color/text_secondary">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_edit_location"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textPostalAddress|textCapWords"
-                    android:textColor="@color/text_primary"
-                    tools:text="San Salvador, SV" />
+                    android:inputType="textPersonName|textCapWords"
+                    android:textColor="@color/text_primary" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -169,9 +156,8 @@
                 android:hint="Biografía"
                 app:startIconTint="@color/text_secondary"
                 app:counterEnabled="true"
-                app:counterMaxLength="150"
+                app:counterMaxLength="100"
                 app:counterTextColor="@color/text_disabled">
-
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_edit_bio"
                     android:layout_width="match_parent"
@@ -179,10 +165,72 @@
                     android:inputType="textMultiLine|textCapSentences"
                     android:minLines="3"
                     android:gravity="top"
-                    android:maxLength="150"
-                    android:textColor="@color/text_primary"
-                    tools:text="Corredor apasionado. Madrugador empedernido. Trail runner los fines de semana." />
+                    android:maxLength="100"
+                    android:textColor="@color/text_primary" />
             </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_edit_peso"
+                style="@style/Widget.Trace.TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_md"
+                android:hint="Peso"
+                app:suffixText="kg"
+                app:suffixTextColor="@color/text_secondary"
+                app:startIconTint="@color/text_secondary">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_edit_peso"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    android:textColor="@color/text_primary" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_edit_altura"
+                style="@style/Widget.Trace.TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_md"
+                android:hint="Altura"
+                app:suffixText="cm"
+                app:suffixTextColor="@color/text_secondary"
+                app:startIconTint="@color/text_secondary">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_edit_altura"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    android:textColor="@color/text_primary" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_edit_fecha"
+                style="@style/Widget.Trace.TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_md"
+                android:hint="Fecha de nacimiento">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_edit_fecha"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:clickable="true"
+                    android:inputType="none"
+                    android:textColor="@color/text_primary" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_cambiar_contrasena"
+                style="@style/Widget.Trace.Button"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/btn_height"
+                android:layout_marginTop="@dimen/space_xl"
+                android:backgroundTint="@color/surface_2"
+                android:textColor="@color/text_primary"
+                android:text="Cambiar contraseña" />
 
         </LinearLayout>
     </ScrollView>
