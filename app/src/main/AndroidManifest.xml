@@ -2,9 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
     <uses-permission android:name="android.permission.INTERNET" />
-
-
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION" />
 
     <application
         android:name=".AppTraceApplication"
@@ -46,6 +48,44 @@
         <activity
             android:name=".EditarPerfilActivity"
             android:exported="false" />
+
+        <activity
+            android:name=".TrackingActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ResumenActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".RutasActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".DetalleRutaActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".CrearRutaActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".TrazarRutaActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".EditarRutaActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ActividadesActivity"
+            android:exported="false" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyD7_z1Byfn5Yoj280LSGJZl8QTeRnPCvbw" />
 
         <meta-data
             android:name="preloaded_fonts"

@@ -7,14 +7,13 @@
     android:layout_height="match_parent"
     android:background="@color/background">
 
-    <ImageView
-        android:id="@+id/iv_map_background"
+    <fragment
+        android:id="@+id/map_fragment"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/surface_2"
-        android:scaleType="centerCrop"
-        android:alpha="0.5"
-        android:contentDescription="Mapa en vivo" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
     <LinearLayout
         android:id="@+id/ll_top_bar"
@@ -48,12 +47,14 @@
             android:orientation="horizontal">
 
             <View
+                android:id="@+id/v_status_dot"
                 android:layout_width="8dp"
                 android:layout_height="8dp"
                 android:background="@drawable/bg_avatar"
                 android:backgroundTint="@color/primary" />
 
             <TextView
+                android:id="@+id/tv_status_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="6dp"
@@ -149,10 +150,11 @@
                         android:src="@drawable/ic_launcher_foreground"
                         app:tint="@color/primary" />
                     <TextView
+                        android:id="@+id/tv_distancia"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/space_xs"
-                        android:text="8.4"
+                        android:text="0.00"
                         android:textColor="@color/text_primary"
                         android:textSize="@dimen/text_xl"
                         android:textStyle="bold" />
@@ -179,10 +181,11 @@
                         android:src="@drawable/ic_launcher_foreground"
                         app:tint="@color/accent" />
                     <TextView
+                        android:id="@+id/tv_ritmo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/space_xs"
-                        android:text="5:02"
+                        android:text="--:--"
                         android:textColor="@color/text_primary"
                         android:textSize="@dimen/text_xl"
                         android:textStyle="bold" />
@@ -234,9 +237,10 @@
                     android:orientation="vertical"
                     android:padding="@dimen/space_md">
                     <TextView
+                        android:id="@+id/tv_desnivel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="+125"
+                        android:text="+0"
                         android:textColor="@color/text_primary"
                         android:textSize="@dimen/text_xl"
                         android:textStyle="bold" />
@@ -306,7 +310,7 @@
                 app:layout_constraintTop_toBottomOf="@id/gl_metrics">
 
                 <com.google.android.material.button.MaterialButton
-                    id="@+id/btn_pause"
+                    android:id="@+id/btn_pause"
                     style="@style/Widget.Trace.Button"
                     android:layout_width="0dp"
                     android:layout_height="64dp"
@@ -322,7 +326,7 @@
                     app:cornerRadius="16dp" />
 
                 <com.google.android.material.button.MaterialButton
-                    id="@+id/btn_stop"
+                    android:id="@+id/btn_stop"
                     style="@style/Widget.Trace.Button"
                     android:layout_width="64dp"
                     android:layout_height="64dp"

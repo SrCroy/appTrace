@@ -8,13 +8,11 @@
     android:background="@color/background"
     tools:context=".DetalleRutaActivity">
 
-    <ImageView
-        android:id="@+id/iv_map_background"
+    <FrameLayout
+        android:id="@+id/fl_map_detalle"
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:background="@color/surface_2"
-        android:scaleType="centerCrop"
-        android:contentDescription="Mapa de la ruta"
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
@@ -47,7 +45,7 @@
             android:layout_weight="1" />
 
         <FrameLayout
-            android:id="@+id/fl_favorite"
+            android:id="@+id/fl_edit_route"
             android:layout_width="36dp"
             android:layout_height="36dp"
             android:background="@drawable/bg_avatar"
@@ -57,7 +55,7 @@
                 android:layout_height="20dp"
                 android:layout_gravity="center"
                 android:src="@drawable/ic_launcher_foreground"
-                app:tint="@color/text_primary" />
+                app:tint="@color/primary" />
         </FrameLayout>
     </LinearLayout>
 
@@ -125,59 +123,6 @@
                             tools:text="Moderado" />
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/space_xs"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical">
-
-                        <ImageView
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:src="@drawable/ic_launcher_foreground"
-                            app:tint="@color/warning" />
-                        <ImageView
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:src="@drawable/ic_launcher_foreground"
-                            app:tint="@color/warning" />
-                        <ImageView
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:src="@drawable/ic_launcher_foreground"
-                            app:tint="@color/warning" />
-                        <ImageView
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:src="@drawable/ic_launcher_foreground"
-                            app:tint="@color/warning" />
-                        <ImageView
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:src="@drawable/ic_launcher_foreground"
-                            app:tint="@color/warning" />
-
-                        <TextView
-                            android:id="@+id/tv_rating"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="4dp"
-                            android:fontFamily="@font/dm_sans"
-                            android:textColor="@color/warning"
-                            android:textSize="@dimen/text_sm"
-                            android:textStyle="bold"
-                            tools:text="4.8" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="4dp"
-                            android:fontFamily="@font/dm_sans"
-                            android:textColor="@color/text_secondary"
-                            android:textSize="@dimen/text_sm"
-                            tools:text="(34 reseñas)" />
-                    </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -365,99 +310,6 @@
                             tools:text="Roberto Silva" />
                     </LinearLayout>
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginVertical="@dimen/space_xl"
-                        android:background="@color/divider" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical">
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/dm_sans"
-                            android:text="Reseñas recientes"
-                            android:textColor="@color/text_primary"
-                            android:textStyle="bold" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/dm_sans"
-                            android:text="34 total"
-                            android:textColor="@color/primary"
-                            android:textSize="@dimen/text_sm" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/space_md"
-                        android:orientation="vertical">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:gravity="center_vertical">
-                            <FrameLayout
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:background="@drawable/bg_avatar"
-                                android:backgroundTint="@color/accent">
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:fontFamily="@font/dm_sans"
-                                    android:textColor="@color/text_primary"
-                                    android:textSize="10sp"
-                                    android:textStyle="bold"
-                                    android:text="ML" />
-                            </FrameLayout>
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/space_sm"
-                                android:fontFamily="@font/dm_sans"
-                                android:textColor="@color/text_primary"
-                                android:textStyle="bold"
-                                android:textSize="@dimen/text_sm"
-                                tools:text="María López" />
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/space_sm"
-                                android:fontFamily="@font/dm_sans"
-                                android:textColor="@color/warning"
-                                android:textSize="@dimen/text_xs"
-                                android:text="★★★★★ 5" />
-                            <View
-                                android:layout_width="0dp"
-                                android:layout_height="0dp"
-                                android:layout_weight="1" />
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/dm_sans"
-                                android:textColor="@color/text_disabled"
-                                android:textSize="@dimen/text_xs"
-                                tools:text="Hace 3 días" />
-                        </LinearLayout>
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/space_xs"
-                            android:fontFamily="@font/dm_sans"
-                            android:textColor="@color/text_secondary"
-                            android:textSize="@dimen/text_sm"
-                            tools:text="Ruta espectacular! El amanecer desde la cima es increíble. Bien mantenida." />
-                    </LinearLayout>
 
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>

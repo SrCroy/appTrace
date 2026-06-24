@@ -1,6 +1,5 @@
 package com.example.apptrace;
 
-import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -13,6 +12,7 @@ import android.widget.Toast;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -25,6 +25,7 @@ import com.example.apptrace.model.auth.ApiResponse;
 import com.example.apptrace.model.profile.ProfileData;
 import com.example.apptrace.network.ApiService;
 import com.example.apptrace.network.RetrofitClient;
+import com.example.apptrace.session.SessionManager;
 import com.google.android.material.button.MaterialButton;
 
 import java.text.ParseException;
@@ -40,7 +41,7 @@ public class PerfilActivity extends AppCompatActivity {
 
     private TextView tvAvatarInitials, tvFullName, tvUsername, tvLocation, tvBio;
     private ImageView ivAvatarProfile, ivEditProfileIcon;
-    private MaterialButton btnEditProfile;
+    private MaterialButton btnEditProfile, btnLogout;
 
     private ApiService apiService;
     private ProfileData currentProfile;
@@ -59,6 +60,7 @@ public class PerfilActivity extends AppCompatActivity {
         tvBio             = findViewById(R.id.tv_bio);
         btnEditProfile    = findViewById(R.id.btn_edit_profile);
         ivEditProfileIcon = findViewById(R.id.iv_edit_profile_icon);
+        btnLogout         = findViewById(R.id.btn_logout);
 
         apiService = RetrofitClient.getClient().create(ApiService.class);
 
@@ -80,6 +82,7 @@ public class PerfilActivity extends AppCompatActivity {
 
         btnEditProfile.setOnClickListener(abrirEdicion);
         ivEditProfileIcon.setOnClickListener(abrirEdicion);
+        btnLogout.setOnClickListener(v -> confirmarCierreSesion());
 
         // Tabs del bottom nav
         LinearLayout llBottomNav = findViewById(R.id.ll_bottom_nav);
@@ -166,6 +169,20 @@ public class PerfilActivity extends AppCompatActivity {
         if (nombre != null && !nombre.isEmpty())   sb.append(nombre.charAt(0));
         if (apellido != null && !apellido.isEmpty()) sb.append(apellido.charAt(0));
         return sb.toString().toUpperCase(Locale.getDefault());
+    }
+
+    private void confirmarCierreSesion() {
+        new AlertDialog.Builder(this, R.style.Theme_Trace_Dialog)
+                .setTitle("Cerrar sesión")
+                .setMessage("¿Seguro que deseas cerrar sesión?")
+                .setPositiveButton("Cerrar sesión", (d, w) -> {
+                    SessionManager.getInstance(this).logout();
+                    Intent intent = new Intent(this, LoginActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                })
+                .setNegativeButton("Cancelar", null)
+                .show();
     }
 
     private String anioMiembro(String fechaIso) {
