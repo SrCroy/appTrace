@@ -36,13 +36,6 @@
             android:layout_weight="1" />
 
         <!-- Ícono de Filtro -->
-        <ImageView
-            android:id="@+id/iv_filter_routes"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
-            android:layout_marginEnd="@dimen/space_md"
-            android:src="@drawable/ic_launcher_foreground"
-            app:tint="@color/text_secondary" />
 
         <!-- Botón Agregar (+) -->
         <FrameLayout
@@ -55,7 +48,7 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_gravity="center"
-                android:src="@drawable/ic_launcher_foreground"
+                android:src="@drawable/plus_pequeno"
                 app:tint="@color/background" />
         </FrameLayout>
     </LinearLayout>

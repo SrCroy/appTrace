@@ -18,9 +18,9 @@
 
         <ImageView
             android:id="@+id/iv_close"
-            android:layout_width="24dp"
+            android:layout_width="16dp"
             android:layout_height="24dp"
-            android:src="@drawable/ic_launcher_foreground"
+            android:src="@drawable/x"
             app:tint="@color/text_primary" />
 
         <TextView
@@ -82,7 +82,7 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_gravity="center"
-                        android:src="@drawable/ic_launcher_foreground"
+                        android:src="@drawable/camara"
                         app:tint="@color/type_run" />
                 </FrameLayout>
 
@@ -98,7 +98,7 @@
                         android:layout_width="16dp"
                         android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:src="@drawable/ic_launcher_foreground"
+                        android:src="@drawable/plus_pequeno"
                         app:tint="@color/background" />
                 </FrameLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>

@@ -104,7 +104,7 @@
             <ImageView
                 android:layout_width="14dp"
                 android:layout_height="14dp"
-                android:src="@drawable/ic_launcher_foreground"
+                android:src="@drawable/grupo"
                 app:tint="@color/text_disabled" />
 
             <TextView
@@ -121,7 +121,7 @@
                 android:layout_width="14dp"
                 android:layout_height="14dp"
                 android:layout_marginStart="@dimen/space_md"
-                android:src="@drawable/ic_launcher_foreground"
+                android:src="@drawable/ruta"
                 app:tint="@color/text_disabled" />
 
             <TextView

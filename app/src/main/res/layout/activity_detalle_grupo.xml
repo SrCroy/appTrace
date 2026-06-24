@@ -29,7 +29,7 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_gravity="center"
-                android:src="@drawable/ic_launcher_foreground"
+                android:src="@drawable/flecha_pequena_izquierda"
                 app:tint="@color/text_primary" />
         </FrameLayout>
 
@@ -48,7 +48,7 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_gravity="center"
-                android:src="@drawable/ic_launcher_foreground"
+                android:src="@drawable/compartir"
                 app:tint="@color/text_primary" />
         </FrameLayout>
     </LinearLayout>
@@ -93,7 +93,7 @@
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:layout_gravity="center"
-                        android:src="@drawable/ic_launcher_foreground"
+                        android:src="@drawable/camara"
                         app:tint="@color/type_run" />
                 </FrameLayout>
             </FrameLayout>
@@ -157,7 +157,7 @@
                     <ImageView
                         android:layout_width="16dp"
                         android:layout_height="16dp"
-                        android:src="@drawable/ic_launcher_foreground"
+                        android:src="@drawable/grupo"
                         app:tint="@color/text_disabled" />
                     <TextView
                         android:layout_width="wrap_content"
@@ -181,7 +181,7 @@
                         android:layout_width="16dp"
                         android:layout_height="16dp"
                         android:layout_marginStart="@dimen/space_lg"
-                        android:src="@drawable/ic_launcher_foreground"
+                        android:src="@drawable/ruta"
                         app:tint="@color/text_disabled" />
                     <TextView
                         android:layout_width="wrap_content"
@@ -210,7 +210,6 @@
                     android:layout_marginTop="@dimen/space_lg"
                     android:text="@string/btn_join"
                     android:textSize="@dimen/text_base"
-                    app:icon="@drawable/ic_launcher_foreground"
                     app:iconGravity="textStart"
                     app:layout_constraintTop_toBottomOf="@id/ll_group_stats" />
 
