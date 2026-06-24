@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:background="@color/background">
 
     <LinearLayout
@@ -19,8 +20,8 @@
         <ImageView
             android:id="@+id/iv_close"
             android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/ic_launcher_foreground"
+            android:layout_height="16dp"
+            android:src="@drawable/x"
             app:tint="@color/text_primary" />
 
         <TextView
@@ -96,8 +97,9 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:text="Trazar en el mapa"
-                        android:textSize="@dimen/text_sm"
-                        app:icon="@drawable/ic_launcher_foreground" />
+                        android:textSize="16dp"
+                        android:fontFamily="@font/dm_sans_bold"
+                        android:textStyle="bold" />
                 </FrameLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -217,6 +219,7 @@
                 style="@style/Widget.Trace.Button"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/btn_height"
+                android:fontFamily="@font/dm_sans_bold"
                 android:layout_marginTop="@dimen/space_xl"
                 android:text="Publicar Ruta"
                 android:textSize="@dimen/text_base" />

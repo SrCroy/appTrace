@@ -64,4 +64,6 @@
         <item name="android:scaleType">centerCrop</item>
         <item name="android:background">@drawable/bg_avatar</item>
     </style>
+
+
 </resources>

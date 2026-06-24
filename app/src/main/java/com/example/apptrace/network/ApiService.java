@@ -11,6 +11,10 @@ import com.example.apptrace.model.auth.LoginRequest;
 import com.example.apptrace.model.profile.ChangePasswordData;
 import com.example.apptrace.model.profile.EditProfileRequest;
 import com.example.apptrace.model.profile.ProfileData;
+import com.example.apptrace.models.Comentario;
+import com.example.apptrace.models.Grupo;
+import com.example.apptrace.models.Publicacion;
+import com.example.apptrace.models.Reaccion;
 import com.example.apptrace.model.logro.LogroData;
 import com.example.apptrace.model.logro.MisLogrosResponse;
 import com.example.apptrace.model.route.EditRouteRequest;
@@ -169,4 +173,13 @@ public interface ApiService {
 
     @DELETE("rutas/{id}")
     Call<ApiResponse<Object>> eliminarRuta(@Path("id") int rutaId);
+
+    // ── Logros (Módulo 5) ─────────────────────────────────────────────────────
+
+    @GET("logros")
+    Call<ApiResponse<List<LogroData>>> catalogoLogros();
+
+    @GET("logros/mis-logros")
+    Call<MisLogrosResponse> misLogros();
+
 }

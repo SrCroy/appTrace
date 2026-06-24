@@ -26,9 +26,9 @@ import retrofit2.Response;
 
 public class RutasActivity extends AppCompatActivity {
 
-    private RecyclerView      rvRoutes;
-    private ApiService        apiService;
-    private RutaAdapter       adapter;
+    private RecyclerView rvRoutes;
+    private ApiService apiService;
+    private RutaAdapter adapter;
     private final List<RouteData> rutas = new ArrayList<>();
 
     @Override

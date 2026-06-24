@@ -25,8 +25,8 @@
     <color name="purple">#B47FFF</color>
 
     <!-- Borders -->
-    <color name="border">#FFFFFF14</color>
-    <color name="divider">#FFFFFF0A</color>
+    <color name="border">#2AFFFFFF</color>
+    <color name="divider">#0AFFFFFF</color>
 
     <!-- Overlays -->
     <color name="overlay_primary">#1A34D98A</color>

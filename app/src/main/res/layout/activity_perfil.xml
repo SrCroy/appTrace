@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -31,7 +32,7 @@
             android:id="@+id/iv_edit_profile_icon"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:src="@drawable/ic_launcher_foreground"
+            android:src="@drawable/editar_perfil"
             app:tint="@color/text_secondary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -42,7 +43,7 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginEnd="@dimen/space_md"
-            android:src="@drawable/ic_launcher_foreground"
+            android:src="@drawable/ajustes"
             app:tint="@color/text_secondary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/iv_edit_profile_icon"
@@ -95,15 +96,12 @@
                 android:id="@+id/iv_verified_badge"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:background="@drawable/bg_avatar"
-                android:backgroundTint="@color/success"
-                android:src="@drawable/ic_launcher_foreground"
-                android:padding="4dp"
-                app:tint="@color/background"
+                android:src="@drawable/verificado"
+                android:translationX="4dp"
+                android:translationY="4dp"
                 app:layout_constraintBottom_toBottomOf="@id/fl_avatar_profile"
                 app:layout_constraintEnd_toEndOf="@id/fl_avatar_profile"
-                android:translationX="4dp"
-                android:translationY="4dp" />
+                app:tint="@color/success" />
 
             <TextView
                 android:id="@+id/tv_full_name"
@@ -390,128 +388,38 @@
                 android:id="@+id/btn_logout"
                 style="@style/Widget.Trace.Button"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/btn_height"
-                android:layout_marginTop="@dimen/space_2xl"
+                android:layout_height="0dp"
+                android:layout_marginTop="32dp"
                 android:backgroundTint="@color/surface_2"
                 android:text="Cerrar sesión"
                 android:textColor="@color/error"
-                android:textSize="@dimen/text_base"
-                app:layout_constraintTop_toBottomOf="@id/cv_logros_preview" />
 
+                android:textSize="@dimen/text_base"
+                app:layout_constraintTop_toBottomOf="@+id/cv_logros_preview"
+                tools:layout_editor_absoluteX="16dp" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
-    <View
-        android:id="@+id/v_bottom_nav_bg"
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/bottom_nav_height"
+        android:layout_height="wrap_content"
         android:background="@color/surface_1"
+        app:menu="@menu/bottom_nav_menu"
+        app:labelVisibilityMode="labeled"
+
+        app:itemHorizontalTranslationEnabled="false"
+        app:itemIconTint="@color/selector_bottom_nav"
+        app:itemTextColor="@color/selector_bottom_nav"
         app:layout_constraintBottom_toBottomOf="parent" />
-
-    <LinearLayout
-        android:id="@+id/ll_bottom_nav"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/bottom_nav_height"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent">
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_launcher_foreground"
-                app:tint="@color/text_secondary" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:fontFamily="@font/dm_sans"
-                android:text="@string/nav_feed"
-                android:textColor="@color/text_secondary"
-                android:textSize="@dimen/text_xs" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_launcher_foreground"
-                app:tint="@color/text_secondary" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:fontFamily="@font/dm_sans"
-                android:text="@string/nav_routes"
-                android:textColor="@color/text_secondary"
-                android:textSize="@dimen/text_xs" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_launcher_foreground"
-                app:tint="@color/text_secondary" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:fontFamily="@font/dm_sans"
-                android:text="@string/nav_groups"
-                android:textColor="@color/text_secondary"
-                android:textSize="@dimen/text_xs" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_launcher_foreground"
-                app:tint="@color/primary" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:fontFamily="@font/dm_sans"
-                android:text="@string/nav_profile"
-                android:textColor="@color/primary"
-                android:textSize="@dimen/text_xs" />
-        </LinearLayout>
-    </LinearLayout>
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_track_activity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:backgroundTint="@color/primary_light"
-        android:src="@drawable/ic_launcher_foreground"
+        android:src="@drawable/iniciar"
         app:borderWidth="0dp"
         app:elevation="4dp"
         app:fabCustomSize="64dp"
