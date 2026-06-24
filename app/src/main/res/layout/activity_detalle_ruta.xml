@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
+    android:fitsSystemWindows="true"
     tools:context=".DetalleRutaActivity">
 
     <FrameLayout
@@ -32,10 +33,10 @@
             android:background="@drawable/bg_avatar"
             android:backgroundTint="@color/overlay_dark">
             <ImageView
-                android:layout_width="20dp"
+                android:layout_width="16dp"
                 android:layout_height="20dp"
                 android:layout_gravity="center"
-                android:src="@drawable/ic_launcher_foreground"
+                android:src="@drawable/x"
                 app:tint="@color/text_primary" />
         </FrameLayout>
 
@@ -51,11 +52,11 @@
             android:background="@drawable/bg_avatar"
             android:backgroundTint="@color/overlay_dark">
             <ImageView
-                android:layout_width="20dp"
+                android:layout_width="16dp"
                 android:layout_height="20dp"
                 android:layout_gravity="center"
-                android:src="@drawable/ic_launcher_foreground"
-                app:tint="@color/primary" />
+                android:src="@drawable/lapiz"
+                app:tint="@color/text_primary" />
         </FrameLayout>
     </LinearLayout>
 
