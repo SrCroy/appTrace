@@ -81,7 +81,7 @@
             android:id="@+id/iv_options"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:src="@drawable/ic_launcher_foreground"
+            android:src="@drawable/menu_puntos_vertical"
             app:tint="@color/text_secondary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -208,7 +208,7 @@
                 android:id="@+id/iv_like"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:src="@drawable/ic_launcher_foreground"
+                android:src="@drawable/corazon"
                 app:tint="@color/text_secondary" />
             <TextView
                 android:id="@+id/tv_like_count"
@@ -225,7 +225,7 @@
                 android:id="@+id/iv_comment"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:src="@drawable/ic_launcher_foreground"
+                android:src="@drawable/comentario_alt"
                 app:tint="@color/text_secondary" />
             <TextView
                 android:id="@+id/tv_comment_count"
@@ -246,7 +246,7 @@
                 android:id="@+id/iv_share"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:src="@drawable/ic_launcher_foreground"
+                android:src="@drawable/compartir"
                 app:tint="@color/text_secondary" />
         </LinearLayout>
 
