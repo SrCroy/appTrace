@@ -3,26 +3,24 @@ package com.example.apptrace;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.apptrace.session.SessionManager;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MainActivity extends AppCompatActivity {
-    private LinearLayout tabFeed, tabRutas, tabGrupos, tabPerfil;
 
     private FloatingActionButton fabTrack;
     private ImageView ivNotifications, ivSearch;
+    private BottomNavigationView bottomNavigationView;
     private SessionManager sessionManager;
 
     @Override
@@ -30,96 +28,51 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
-        tabFeed = findViewById(R.id.tab_feed);
-        tabRutas = findViewById(R.id.tab_rutas);
-        tabGrupos = findViewById(R.id.tab_grupos);
-        tabPerfil = findViewById(R.id.tab_perfil);
-
-        tabFeed.setOnClickListener(v -> {
-            cargarFragmento(new FeedFragment());
-            actualizarColoresMenu(tabFeed);
-        });
-        tabRutas.setOnClickListener(v -> {
-            cargarFragmento(new RutasFragment());
-            actualizarColoresMenu(tabRutas);
-        });
-        tabGrupos.setOnClickListener(v -> {
-            cargarFragmento(new GruposFragment());
-            actualizarColoresMenu(tabGrupos);
-        });
-        tabPerfil.setOnClickListener(v -> {
-            cargarFragmento(new PerfilFragment());
-            actualizarColoresMenu(tabPerfil);
-        });
-
-        // Estado inicial por defecto
-        if (savedInstanceState == null) {
-            cargarFragmento(new FeedFragment());
-            actualizarColoresMenu(tabFeed);
-        }
-    }
-
-    private void cargarFragmento(Fragment fragment) {
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, fragment)
-                .commit();
-    }
-
-    // Lógica visual para encender el tab tocado y apagar los demás
-    private void actualizarColoresMenu(LinearLayout tabSeleccionado) {
-        restaurarColor(tabFeed);
-        restaurarColor(tabRutas);
-        restaurarColor(tabGrupos);
-        restaurarColor(tabPerfil);
-
-        ImageView icono = (ImageView) tabSeleccionado.getChildAt(0);
-        TextView texto = (TextView) tabSeleccionado.getChildAt(1);
-
-        icono.setColorFilter(ContextCompat.getColor(this, R.color.primary));
-        texto.setTextColor(ContextCompat.getColor(this, R.color.primary));
-    }
-
-    // Lógica visual para poner un tab en estado inactivo
-    private void restaurarColor(LinearLayout tab) {
-        ImageView icono = (ImageView) tab.getChildAt(0);
-        TextView texto = (TextView) tab.getChildAt(1);
-
-        icono.setColorFilter(ContextCompat.getColor(this, R.color.text_secondary));
-        texto.setTextColor(ContextCompat.getColor(this, R.color.text_secondary));
-
         sessionManager = SessionManager.getInstance(this);
 
+        // 1. Enlazar las vistas correctas desde el XML
+        bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        fabTrack = findViewById(R.id.fab_track_activity);
         ivNotifications = findViewById(R.id.iv_notifications);
-        ivSearch        = findViewById(R.id.iv_search);
-        fabTrack        = findViewById(R.id.fab_track_activity);
+        ivSearch = findViewById(R.id.iv_search);
 
-        LinearLayout llBottomNav = findViewById(R.id.ll_bottom_nav);
+        // Opcional: Asegurarnos por código de que el hueco central no haga nada si lo tocan por error
+        if (bottomNavigationView.getMenu().findItem(R.id.menu_placeholder) != null) {
+            bottomNavigationView.getMenu().findItem(R.id.menu_placeholder).setEnabled(false);
+        }
 
-        // Tab perfil — long press → logout
-        llBottomNav.getChildAt(4).setOnLongClickListener(v -> {
-            sessionManager.logout();
-            startActivity(new Intent(MainActivity.this, LoginActivity.class));
-            finish();
-            return true;
+        // 2. Configurar la navegación profesional (Esto reemplaza todos tus OnClickListeners manuales)
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+
+            if (itemId == R.id.menu_feed) {
+                cargarFragmento(new FeedFragment()); // Asegúrate de tener este Fragment creado
+                return true;
+            } else if (itemId == R.id.menu_routes) {
+                // cargarFragmento(new RutasFragment()); // Descomenta cuando lo crees
+                Toast.makeText(this, "Rutas — próximamente", Toast.LENGTH_SHORT).show();
+                return true;
+            } else if (itemId == R.id.menu_groups) {
+                // cargarFragmento(new GruposFragment()); // Descomenta cuando lo crees
+                Toast.makeText(this, "Grupos — próximamente", Toast.LENGTH_SHORT).show();
+                return true;
+            } else if (itemId == R.id.menu_profile) {
+                cargarFragmento(new PerfilFragment());
+                return true;
+            }
+            return false;
         });
 
-        // Tab perfil → PerfilActivity
-        llBottomNav.getChildAt(4).setOnClickListener(v ->
-                startActivity(new Intent(this, PerfilActivity.class)));
-
-        // Tab rutas → RutasActivity
-        llBottomNav.getChildAt(1).setOnClickListener(v ->
-                startActivity(new Intent(this, RutasActivity.class)));
-
-        // Tab grupos
-        llBottomNav.getChildAt(3).setOnClickListener(v ->
-                Toast.makeText(this, "Grupos — próximamente", Toast.LENGTH_SHORT).show());
+        // 3. Configurar clics independientes
+        fabTrack.setOnClickListener(v ->
+                startActivity(new Intent(this, ActividadesActivity.class)));
 
         ivNotifications.setOnClickListener(v ->
                 Toast.makeText(this, "Notificaciones — próximamente", Toast.LENGTH_SHORT).show());
@@ -127,8 +80,18 @@ public class MainActivity extends AppCompatActivity {
         ivSearch.setOnClickListener(v ->
                 Toast.makeText(this, "Búsqueda — próximamente", Toast.LENGTH_SHORT).show());
 
-        // FAB → historial de actividades
-        fabTrack.setOnClickListener(v ->
-                startActivity(new Intent(this, ActividadesActivity.class)));
+        // 4. Estado inicial por defecto al abrir la app
+        if (savedInstanceState == null) {
+            // Esto marca el icono como seleccionado Y carga el fragmento automáticamente
+            bottomNavigationView.setSelectedItemId(R.id.menu_feed);
+        }
+    }
+
+    // ─── Método central para cambiar pantallas ────────────────────────────────
+
+    private void cargarFragmento(Fragment fragment) {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .commit();
     }
 }

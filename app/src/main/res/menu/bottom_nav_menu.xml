@@ -4,13 +4,13 @@
     <!-- Inicio / Feed -->
     <item
         android:id="@+id/menu_feed"
-        android:icon="@drawable/ic_launcher_foreground"
+        android:icon="@drawable/home"
         android:title="@string/nav_feed" />
 
     <!-- Rutas -->
     <item
         android:id="@+id/menu_routes"
-        android:icon="@drawable/ic_launcher_foreground"
+        android:icon="@drawable/ruta"
         android:title="@string/nav_routes" />
 
     <!-- Elemento invisible para dejar el hueco del Botón Flotante (FAB) -->
@@ -22,13 +22,13 @@
     <!-- Grupos -->
     <item
         android:id="@+id/menu_groups"
-        android:icon="@drawable/ic_launcher_foreground"
+        android:icon="@drawable/grupo"
         android:title="@string/nav_groups" />
 
     <!-- Perfil -->
     <item
         android:id="@+id/menu_profile"
-        android:icon="@drawable/ic_launcher_foreground"
+        android:icon="@drawable/perfil"
         android:title="@string/nav_profile" />
 
 </menu>
