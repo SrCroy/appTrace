@@ -71,20 +71,19 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_feed"
+    <FrameLayout
+        android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:clipToPadding="false"
-        android:paddingBottom="100dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cl_top_bar"
-        tools:listitem="@layout/item_publicacion" /> <View
-    android:id="@+id/v_bottom_nav_bg"
-    android:layout_width="match_parent"
-    android:layout_height="@dimen/bottom_nav_height"
-    android:background="@color/surface_1"
-    app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toTopOf="@id/v_bottom_nav_bg"
+        app:layout_constraintTop_toBottomOf="@id/cl_top_bar" />
+
+    <View
+        android:id="@+id/v_bottom_nav_bg"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bottom_nav_height"
+        android:background="@color/surface_1"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
     <LinearLayout
         android:id="@+id/ll_bottom_nav"
@@ -94,6 +93,7 @@
         app:layout_constraintBottom_toBottomOf="parent">
 
         <LinearLayout
+            android:id="@+id/tab_feed"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -115,6 +115,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/tab_rutas"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -141,6 +142,7 @@
             android:layout_weight="1" />
 
         <LinearLayout
+            android:id="@+id/tab_grupos"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -162,6 +164,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/tab_perfil"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"

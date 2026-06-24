@@ -34,6 +34,7 @@ import com.example.apptrace.model.profile.ProfileData;
 import com.example.apptrace.network.ApiService;
 import com.example.apptrace.network.RetrofitClient;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.io.ByteArrayOutputStream;
@@ -189,58 +190,39 @@ public class EditarPerfilActivity extends AppCompatActivity {
     // ─── Cambiar contraseña ───────────────────────────────────────────────────
 
     private void mostrarDialogoCambiarContrasena() {
-        int pad = (int) getResources().getDimension(R.dimen.screen_padding);
-        LinearLayout layout = new LinearLayout(this);
-        layout.setOrientation(LinearLayout.VERTICAL);
-        layout.setPadding(pad, pad / 2, pad, 0);
+        // 1. "Inflamos" (cargamos) el diseño XML que acabas de crear
+        View viewDialogo = getLayoutInflater().inflate(R.layout.dialog_cambiar_contrasena, null);
 
-        EditText etActual    = campoPassword("Contraseña actual");
-        EditText etNueva     = campoPassword("Nueva contraseña (mínimo 6 caracteres)");
-        EditText etConfirmar = campoPassword("Confirmar nueva contraseña");
+        // 2. Enlazamos los campos de texto usando la vista del diálogo
+        EditText etActual = viewDialogo.findViewById(R.id.etContrasenaActual);
+        EditText etNueva = viewDialogo.findViewById(R.id.etNuevaContrasena);
+        EditText etConfirmar = viewDialogo.findViewById(R.id.etConfirmarContrasena);
 
-        layout.addView(etActual);
-        layout.addView(etNueva);
-        layout.addView(etConfirmar);
-
-        new AlertDialog.Builder(this)
+        new MaterialAlertDialogBuilder(this, R.style.ThemeOverlay_Trace_Dialog)
                 .setTitle("Cambiar contraseña")
-                .setView(layout)
+                .setView(viewDialogo) // <--- Aquí le pasamos tu diseño
                 .setPositiveButton("Cambiar", (d, w) -> {
-                    String actual    = etActual.getText().toString().trim();
-                    String nueva     = etNueva.getText().toString().trim();
+                    String actual = etActual.getText().toString().trim();
+                    String nueva = etNueva.getText().toString().trim();
                     String confirmar = etConfirmar.getText().toString().trim();
 
                     if (actual.isEmpty() || nueva.isEmpty()) {
-                        Toast.makeText(this, "Completa todos los campos",
-                                Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Completa todos los campos", Toast.LENGTH_SHORT).show();
                         return;
                     }
                     if (!nueva.equals(confirmar)) {
-                        Toast.makeText(this, "Las contraseñas nuevas no coinciden",
-                                Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Las contraseñas nuevas no coinciden", Toast.LENGTH_SHORT).show();
                         return;
                     }
                     if (nueva.length() < 6) {
-                        Toast.makeText(this, "Mínimo 6 caracteres",
-                                Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Mínimo 6 caracteres", Toast.LENGTH_SHORT).show();
                         return;
                     }
+
                     enviarCambioContrasena(actual, nueva);
                 })
                 .setNegativeButton("Cancelar", null)
                 .show();
-    }
-
-    private EditText campoPassword(String hint) {
-        EditText et = new EditText(this);
-        et.setHint(hint);
-        et.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT);
-        lp.topMargin = (int) getResources().getDimension(R.dimen.space_sm);
-        et.setLayoutParams(lp);
-        return et;
     }
 
     private void enviarCambioContrasena(String actual, String nueva) {

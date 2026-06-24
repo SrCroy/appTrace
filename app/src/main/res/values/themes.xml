@@ -109,7 +109,6 @@
         <item name="backgroundTint">@color/surface_1</item>
         <item name="shapeAppearance">@style/ShapeAppearance.Trace.ExtraLarge</item>
     </style>
-
     <style name="ThemeOverlay.Trace.Dialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
 
         <item name="colorSurface">@color/surface_1</item>
