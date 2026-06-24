@@ -27,11 +27,11 @@
             <!-- En tu código final, este ícono y su color cambiarán según el logro -->
             <ImageView
                 android:id="@+id/iv_achievement_icon"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
+                android:layout_width="79dp"
+                android:layout_height="140dp"
                 android:layout_gravity="center"
-                android:src="@drawable/ic_launcher_foreground"
-                app:tint="@color/primary" />
+                android:src="@drawable/logro_foreground"
+                 />
         </FrameLayout>
 
         <!-- ================= TEXTOS (TÍTULO Y DESCRIPCIÓN) ================= -->
