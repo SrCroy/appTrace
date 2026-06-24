@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -31,7 +32,7 @@
             android:id="@+id/iv_edit_profile_icon"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:src="@drawable/ic_launcher_foreground"
+            android:src="@drawable/editar_perfil"
             app:tint="@color/text_secondary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -42,7 +43,7 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginEnd="@dimen/space_md"
-            android:src="@drawable/ic_launcher_foreground"
+            android:src="@drawable/ajustes"
             app:tint="@color/text_secondary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/iv_edit_profile_icon"
@@ -95,15 +96,12 @@
                 android:id="@+id/iv_verified_badge"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:background="@drawable/bg_avatar"
-                android:backgroundTint="@color/success"
-                android:src="@drawable/ic_launcher_foreground"
-                android:padding="4dp"
-                app:tint="@color/background"
+                android:src="@drawable/verificado"
+                android:translationX="4dp"
+                android:translationY="4dp"
                 app:layout_constraintBottom_toBottomOf="@id/fl_avatar_profile"
                 app:layout_constraintEnd_toEndOf="@id/fl_avatar_profile"
-                android:translationX="4dp"
-                android:translationY="4dp" />
+                app:tint="@color/success" />
 
             <TextView
                 android:id="@+id/tv_full_name"

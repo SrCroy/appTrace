@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
+    android:fitsSystemWindows="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background">
@@ -79,7 +80,11 @@
         android:paddingBottom="100dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cl_top_bar"
-        tools:listitem="@layout/item_publicacion" /> <View
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="0dp"
+        tools:listitem="@layout/item_publicacion" />
+
+    <View
     android:id="@+id/v_bottom_nav_bg"
     android:layout_width="match_parent"
     android:layout_height="@dimen/bottom_nav_height"
