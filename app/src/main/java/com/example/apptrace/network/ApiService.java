@@ -26,17 +26,11 @@ import retrofit2.http.PUT;
 import retrofit2.http.Part;
 
 public interface ApiService {
-    // Obtener el muro de noticias global
-    @GET("publicaciones")
-    Call<List<Publicacion>> getFeedPrincipal(@Header("Authorization") String token);
 
     // ── Auth ──────────────────────────────────────────────────────────────────
 
     @POST("login")
     Call<ApiResponse<LoginData>> login(@Body LoginRequest request);
-    // Listar las comunidades sugeridas y unidas
-    @GET("grupos")
-    Call<List<Grupo>> getGrupos(@Header("Authorization") String token);
 
     @Multipart
     @POST("register")
@@ -47,11 +41,6 @@ public interface ApiService {
             @Part("email")    RequestBody email,
             @Part("password") RequestBody password,
             @Part MultipartBody.Part avatar
-    // Obtener el muro interno de una comunidad específica
-    @GET("grupos/{id}/publicaciones")
-    Call<List<Publicacion>> getPublicacionesGrupo(
-            @Header("Authorization") String token,
-            @Path("id") int grupoId
     );
 
     // ── Perfil ────────────────────────────────────────────────────────────────
@@ -61,12 +50,6 @@ public interface ApiService {
 
     @PUT("perfil/editar")
     Call<ApiResponse<ProfileData>> editarPerfil(@Body EditProfileRequest request);
-    // Dar me gusta a una publicación o ruta compartida
-    @POST("reacciones")
-    Call<Reaccion> crearReaccion(
-            @Header("Authorization") String token,
-            @Body Reaccion reaccion
-    );
 
     @POST("perfil/cambiar-contrase%C3%B1a")
     Call<ApiResponse<Object>> cambiarContrasena(@Body ChangePasswordData request);
@@ -74,10 +57,33 @@ public interface ApiService {
     @Multipart
     @POST("avatar/update")
     Call<ApiResponse<Object>> actualizarAvatar(@Part MultipartBody.Part avatar);
+
+    // Obtener el muro de noticias global
+    @GET("publicaciones")
+    Call<List<Publicacion>> getFeedPrincipal(@Header("Authorization") String token);
+
+    // Listar las comunidades sugeridas y unidas
+    @GET("grupos")
+    Call<List<Grupo>> getGrupos(@Header("Authorization") String token);
+
     // Enviar un comentario en una publicación
     @POST("comentarios")
     Call<Comentario> crearComentario(
             @Header("Authorization") String token,
             @Body Comentario comentario
+    );
+
+    // Obtener el muro interno de una comunidad específica
+    @GET("grupos/{id}/publicaciones")
+    Call<List<Publicacion>> getPublicacionesGrupo(
+            @Header("Authorization") String token,
+            @Path("id") int grupoId
+    );
+
+    // Dar me gusta a una publicación o ruta compartida
+    @POST("reacciones")
+    Call<Reaccion> crearReaccion(
+            @Header("Authorization") String token,
+            @Body Reaccion reaccion
     );
 }
