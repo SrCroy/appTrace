@@ -56,13 +56,21 @@ public class PerfilFragment extends Fragment {
     private ActivityResultLauncher<Intent> editLauncher;
     private boolean recargarAlVolver = false;
 
+    // Variable para guardar el ID si venimos desde el Feed
+    private int usuarioIdVisitado = -1;
+
     public PerfilFragment() {
-        // Constructor público vacío requerido por los Fragments
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Verificamos si recibimos un ID desde el Feed
+        if (getArguments() != null && getArguments().containsKey("USUARIO_ID")) {
+            usuarioIdVisitado = getArguments().getInt("USUARIO_ID", -1);
+        }
+
         editLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
@@ -99,23 +107,36 @@ public class PerfilFragment extends Fragment {
 
         apiService = RetrofitClient.getClient().create(ApiService.class);
 
-        View.OnClickListener abrirEdicion = v -> {
-            Intent intent = new Intent(requireContext(), EditarPerfilActivity.class);
-            if (currentProfile != null) {
-                intent.putExtra(EditarPerfilActivity.EXTRA_PROFILE, currentProfile);
-            }
-            editLauncher.launch(intent);
-        };
+        if (usuarioIdVisitado != -1) {
+            btnEditProfile.setVisibility(View.GONE);
+            ivEditProfileIcon.setVisibility(View.GONE);
+            btnLogout.setVisibility(View.GONE);
+        } else {
+            View.OnClickListener abrirEdicion = v -> {
+                Intent intent = new Intent(requireContext(), EditarPerfilActivity.class);
+                if (currentProfile != null) {
+                    intent.putExtra(EditarPerfilActivity.EXTRA_PROFILE, currentProfile);
+                }
+                editLauncher.launch(intent);
+            };
 
-        btnEditProfile.setOnClickListener(abrirEdicion);
-        ivEditProfileIcon.setOnClickListener(abrirEdicion);
-        btnLogout.setOnClickListener(v -> confirmarCierreSesion());
+            btnEditProfile.setOnClickListener(abrirEdicion);
+            ivEditProfileIcon.setOnClickListener(abrirEdicion);
+            btnLogout.setOnClickListener(v -> confirmarCierreSesion());
+        }
 
         cvLogrosPreview.setOnClickListener(v ->
                 startActivity(new Intent(requireContext(), LogrosActivity.class)));
 
         cargarPerfil();
-        cargarLogros();
+
+        if (usuarioIdVisitado == -1) {
+            cargarLogros();
+        } else {
+            // Ocultamos el conteo si es otra persona
+            tvLogrosCount.setText("Ver logros");
+            tvLogrosPct.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -124,7 +145,7 @@ public class PerfilFragment extends Fragment {
         if (recargarAlVolver) {
             recargarAlVolver = false;
             cargarPerfil();
-            cargarLogros();
+            if (usuarioIdVisitado == -1) cargarLogros();
         }
     }
 
@@ -160,7 +181,15 @@ public class PerfilFragment extends Fragment {
     }
 
     private void cargarPerfil() {
-        apiService.miPerfil().enqueue(new Callback<ApiResponse<ProfileData>>() {
+        Call<ApiResponse<ProfileData>> call;
+
+        if (usuarioIdVisitado != -1) {
+            call = apiService.obtenerPerfilUsuario(usuarioIdVisitado); // Perfil ajeno
+        } else {
+            call = apiService.miPerfil(); // Mi perfil
+        }
+
+        call.enqueue(new Callback<ApiResponse<ProfileData>>() {
             @Override
             public void onResponse(Call<ApiResponse<ProfileData>> call,
                                    Response<ApiResponse<ProfileData>> response) {
@@ -171,8 +200,7 @@ public class PerfilFragment extends Fragment {
                     currentProfile = response.body().getData();
                     mostrarPerfil(currentProfile);
                 } else {
-                    Toast.makeText(requireContext(),
-                            "No se pudo cargar el perfil", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), "No se pudo cargar el perfil", Toast.LENGTH_SHORT).show();
                 }
             }
 

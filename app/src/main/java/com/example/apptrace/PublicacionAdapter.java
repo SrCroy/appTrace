@@ -22,9 +22,17 @@ import retrofit2.Response;
 public class PublicacionAdapter extends RecyclerView.Adapter<PublicacionAdapter.PublicacionViewHolder> {
 
     private List<Publicacion> listaPublicaciones;
+    private OnPublicacionClickListener listener;
 
-    public PublicacionAdapter(List<Publicacion> listaPublicaciones) {
+    public interface OnPublicacionClickListener {
+        void onUsuarioClick(int usuarioId);
+        void onRutaClick(int rutaId);
+        void onComentarioClick(int publicacionId);
+    }
+
+    public PublicacionAdapter(List<Publicacion> listaPublicaciones, OnPublicacionClickListener listener) {
         this.listaPublicaciones = listaPublicaciones;
+        this.listener = listener;
     }
 
     @NonNull
@@ -53,6 +61,8 @@ public class PublicacionAdapter extends RecyclerView.Adapter<PublicacionAdapter.
             holder.itemView.findViewById(R.id.ll_stats).setVisibility(View.VISIBLE);
             holder.itemView.findViewById(R.id.tv_activity_type).setVisibility(View.VISIBLE);
 
+            holder.ivMapPreview.setVisibility(View.VISIBLE);
+
             Publicacion.ActividadAnidada act = p.getActividad();
             holder.tvActivityType.setText(act.getTipoDeporte());
             holder.tvStatDistance.setText(String.format("%.2f km", act.getDistanciaKm()));
@@ -69,6 +79,22 @@ public class PublicacionAdapter extends RecyclerView.Adapter<PublicacionAdapter.
             holder.itemView.findViewById(R.id.tv_activity_type).setVisibility(View.GONE);
             holder.ivMapPreview.setVisibility(View.GONE); // Oculta el recuadro del mapa
         }
+
+        View.OnClickListener irAlPerfil = v -> {
+            if (listener != null) listener.onUsuarioClick(p.getUsuarioId());
+        };
+        holder.flAvatar.setOnClickListener(irAlPerfil);
+        holder.tvUserName.setOnClickListener(irAlPerfil);
+
+        if (p.getRutaId() != null) {
+            holder.ivMapPreview.setOnClickListener(v -> {
+                if (listener != null) listener.onRutaClick(p.getRutaId());
+            });
+        }
+
+        holder.ivComment.setOnClickListener(v -> {
+            if (listener != null) listener.onComentarioClick(p.getIdPublicacion());
+        });
 
         // Lógica del Like
         holder.ivLike.setOnClickListener(v -> {
@@ -106,10 +132,12 @@ public class PublicacionAdapter extends RecyclerView.Adapter<PublicacionAdapter.
 
     public static class PublicacionViewHolder extends RecyclerView.ViewHolder {
         TextView tvUserName, tvTime, tvActivityType, tvContenidoPost, tvStatDistance, tvStatTime, tvStatPace, tvLikeCount, tvCommentCount;
-        ImageView ivLike, ivMapPreview;
+        ImageView ivLike, ivMapPreview, ivComment;
+        View flAvatar;
 
         public PublicacionViewHolder(@NonNull View itemView) {
             super(itemView);
+            flAvatar = itemView.findViewById(R.id.fl_avatar);
             tvUserName = itemView.findViewById(R.id.tv_user_name);
             tvTime = itemView.findViewById(R.id.tv_time);
             tvActivityType = itemView.findViewById(R.id.tv_activity_type);
@@ -121,6 +149,7 @@ public class PublicacionAdapter extends RecyclerView.Adapter<PublicacionAdapter.
             tvCommentCount = itemView.findViewById(R.id.tv_comment_count);
             ivMapPreview = itemView.findViewById(R.id.iv_map_preview);
             ivLike = itemView.findViewById(R.id.iv_like);
+            ivComment = itemView.findViewById(R.id.iv_comment);
         }
     }
 }

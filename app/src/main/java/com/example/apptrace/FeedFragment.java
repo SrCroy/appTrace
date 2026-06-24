@@ -1,5 +1,6 @@
 package com.example.apptrace;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.apptrace.R;
-import com.example.apptrace.PublicacionAdapter;
 import com.example.apptrace.models.Publicacion;
 import com.example.apptrace.network.ApiService;
 import com.example.apptrace.network.RetrofitClient;
@@ -35,13 +35,42 @@ public class FeedFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        // Inflamos el diseño general del fragmento del feed
         View view = inflater.inflate(R.layout.fragment_feed, container, false);
 
         rvFeed = view.findViewById(R.id.rv_feed);
         rvFeed.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        adapter = new PublicacionAdapter(listaPublicaciones);
+        adapter = new PublicacionAdapter(listaPublicaciones, new PublicacionAdapter.OnPublicacionClickListener() {
+            @Override
+            public void onUsuarioClick(int usuarioId) {
+                PerfilFragment perfilFragment = new PerfilFragment();
+
+                Bundle bundle = new Bundle();
+                bundle.putInt("USUARIO_ID", usuarioId);
+                perfilFragment.setArguments(bundle);
+
+                requireActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, perfilFragment)
+                        .addToBackStack(null)
+                        .commit();
+            }
+
+            @Override
+            public void onRutaClick(int rutaId) {
+                Intent intent = new Intent(requireContext(), DetalleRutaActivity.class);
+                intent.putExtra("RUTA_ID", rutaId);
+                startActivity(intent);
+                Toast.makeText(getContext(), "Navegando a la ruta ID: " + rutaId, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onComentarioClick(int publicacionId) {
+                // Puente a los Comentarios
+                ComentariosBottomSheet bottomSheet = ComentariosBottomSheet.newInstance(publicacionId);
+                bottomSheet.show(requireActivity().getSupportFragmentManager(), "ComentariosBottomSheet");
+            }
+        });
+
         rvFeed.setAdapter(adapter);
 
         apiService = RetrofitClient.getClient().create(ApiService.class);
@@ -58,10 +87,8 @@ public class FeedFragment extends Fragment {
             @Override
             public void onResponse(@NonNull Call<List<Publicacion>> call, @NonNull Response<List<Publicacion>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    // Limpiamos e inyectamos los datos de Railway
                     listaPublicaciones.clear();
                     listaPublicaciones.addAll(response.body());
-
                     adapter.notifyDataSetChanged();
                 } else {
                     Toast.makeText(getContext(), "No se pudo cargar el feed", Toast.LENGTH_SHORT).show();

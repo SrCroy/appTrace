@@ -66,6 +66,9 @@ public interface ApiService {
     @GET("perfil")
     Call<ApiResponse<ProfileData>> miPerfil();
 
+    @GET("usuarios/{id}")
+    Call<ApiResponse<ProfileData>> obtenerPerfilUsuario(@Path("id") int usuarioId);
+
     @PUT("perfil/editar")
     Call<ApiResponse<ProfileData>> editarPerfil(@Body EditProfileRequest request);
 
@@ -87,6 +90,14 @@ public interface ApiService {
     // Enviar un comentario en una publicación
     @POST("comentarios")
     Call<Comentario> crearComentario(@Body Comentario comentario);
+
+    // Obtener los comentarios de una publicación específica
+    @GET("publicaciones/{id}/comentarios")
+    Call<List<Comentario>> obtenerComentarios(@Path("id") int publicacionId);
+
+    // Crear una nueva publicación en el muro global
+    @POST("publicaciones")
+    Call<Publicacion> crearPublicacion(@Body Publicacion nuevaPublicacion);
 
     // Obtener el muro interno de una comunidad específica
     @GET("grupos/{id}/publicaciones")
