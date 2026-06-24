@@ -322,8 +322,8 @@ public class RegistroActivity extends AppCompatActivity {
                         response.errorBody().string(), ApiResponse.class);
                 if (error != null && error.getMessage() != null) return error.getMessage();
             }
-        } catch (IOException e) {
-            // cae al genérico
+        } catch (Exception e) {
+            // respuesta no es JSON (ej. HTML de error del servidor)
         }
         return "Error al registrar";
     }

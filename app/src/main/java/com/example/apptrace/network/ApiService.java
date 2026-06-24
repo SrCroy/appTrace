@@ -1,5 +1,10 @@
 package com.example.apptrace.network;
 
+import com.example.apptrace.model.activity.ActivityData;
+import com.example.apptrace.model.activity.ActivityDetail;
+import com.example.apptrace.model.activity.FinalizarData;
+import com.example.apptrace.model.activity.GpsBatch;
+import com.example.apptrace.model.activity.IniciarActividadRequest;
 import com.example.apptrace.model.auth.ApiResponse;
 import com.example.apptrace.model.auth.LoginData;
 import com.example.apptrace.model.auth.LoginRequest;
@@ -10,6 +15,9 @@ import com.example.apptrace.models.Comentario;
 import com.example.apptrace.models.Grupo;
 import com.example.apptrace.models.Publicacion;
 import com.example.apptrace.models.Reaccion;
+import com.example.apptrace.model.route.EditRouteRequest;
+import com.example.apptrace.model.route.RouteData;
+import com.example.apptrace.model.route.RouteDetail;
 
 import java.util.List;
 
@@ -17,6 +25,7 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Multipart;
@@ -24,6 +33,7 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.PUT;
 import retrofit2.http.Part;
+import retrofit2.http.Path;
 
 public interface ApiService {
 
@@ -86,4 +96,73 @@ public interface ApiService {
             @Header("Authorization") String token,
             @Body Reaccion reaccion
     );
+    // ── Actividades (Módulo 3) ────────────────────────────────────────────────
+
+    @POST("actividades/iniciar")
+    Call<ApiResponse<ActivityData>> iniciarActividad(@Body IniciarActividadRequest request);
+
+    @POST("actividades/{id}/gps")
+    Call<ApiResponse<Object>> enviarGps(@Path("id") int actividadId, @Body GpsBatch batch);
+
+    @POST("actividades/{id}/pausar")
+    Call<ApiResponse<Object>> pausarActividad(@Path("id") int actividadId);
+
+    @POST("actividades/{id}/reanudar")
+    Call<ApiResponse<Object>> reanudarActividad(@Path("id") int actividadId);
+
+    @POST("actividades/{id}/finalizar")
+    Call<ApiResponse<FinalizarData>> finalizarActividad(@Path("id") int actividadId);
+
+    @POST("actividades/{id}/descartar")
+    Call<ApiResponse<Object>> descartarActividad(@Path("id") int actividadId);
+
+    @GET("actividades")
+    Call<ApiResponse<List<ActivityData>>> listarActividades();
+
+    @GET("actividades/{id}")
+    Call<ApiResponse<ActivityDetail>> obtenerActividad(@Path("id") int actividadId);
+
+    @DELETE("actividades/{id}")
+    Call<ApiResponse<Object>> eliminarActividad(@Path("id") int actividadId);
+
+    // ── Rutas (Módulo 4) ──────────────────────────────────────────────────────
+
+    @GET("rutas")
+    Call<ApiResponse<List<RouteData>>> listarRutas();
+
+    @GET("rutas/{id}")
+    Call<ApiResponse<RouteDetail>> obtenerRuta(@Path("id") int rutaId);
+
+    @Multipart
+    @POST("rutas")
+    Call<ApiResponse<RouteData>> crearRuta(
+            @Part("nombre")        RequestBody nombre,
+            @Part("descripcion")   RequestBody descripcion,
+            @Part("dificultad")    RequestBody dificultad,
+            @Part("tipo_deporte")  RequestBody tipoDeporte,
+            @Part("distancia_km")  RequestBody distanciaKm,
+            @Part("privacidad")    RequestBody privacidad
+    );
+
+    @Multipart
+    @POST("rutas")
+    Call<ApiResponse<RouteData>> crearRutaConImagen(
+            @Part("nombre")        RequestBody nombre,
+            @Part("descripcion")   RequestBody descripcion,
+            @Part("dificultad")    RequestBody dificultad,
+            @Part("tipo_deporte")  RequestBody tipoDeporte,
+            @Part("distancia_km")  RequestBody distanciaKm,
+            @Part("privacidad")    RequestBody privacidad,
+            @Part MultipartBody.Part miniatura
+    );
+
+    @POST("rutas/{id}/puntos-gps")
+    Call<ApiResponse<Object>> agregarPuntosRuta(@Path("id") int rutaId, @Body GpsBatch puntos);
+
+    @PUT("rutas/{id}")
+    Call<ApiResponse<RouteData>> editarRuta(@Path("id") int rutaId,
+                                             @Body EditRouteRequest request);
+
+    @DELETE("rutas/{id}")
+    Call<ApiResponse<Object>> eliminarRuta(@Path("id") int rutaId);
 }
