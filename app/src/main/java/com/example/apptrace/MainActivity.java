@@ -14,7 +14,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MainActivity extends AppCompatActivity {
 
-    private LinearLayout llFeed, llRoutes, llGroups, llProfile;
     private FloatingActionButton fabTrack;
     private ImageView ivNotifications, ivSearch;
     private SessionManager sessionManager;
@@ -26,66 +25,40 @@ public class MainActivity extends AppCompatActivity {
 
         sessionManager = SessionManager.getInstance(this);
 
-        llFeed          = findViewById(R.id.ll_bottom_nav).findViewWithTag(null);
         ivNotifications = findViewById(R.id.iv_notifications);
         ivSearch        = findViewById(R.id.iv_search);
         fabTrack        = findViewById(R.id.fab_track_activity);
 
-        // Logout al mantener presionado el ícono de perfil
         LinearLayout llBottomNav = findViewById(R.id.ll_bottom_nav);
 
-        // Tab perfil es el 4to hijo del bottom nav (índice 3, saltando el View vacío del FAB)
-        llBottomNav.getChildAt(4).setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                sessionManager.logout();
-                startActivity(new Intent(MainActivity.this, LoginActivity.class));
-                finish();
-                return true;
-            }
+        // Tab perfil — long press → logout
+        llBottomNav.getChildAt(4).setOnLongClickListener(v -> {
+            sessionManager.logout();
+            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            finish();
+            return true;
         });
 
-        // Tab perfil click normal → abre PerfilActivity
-        llBottomNav.getChildAt(4).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, PerfilActivity.class));
-            }
-        });
+        // Tab perfil → PerfilActivity
+        llBottomNav.getChildAt(4).setOnClickListener(v ->
+                startActivity(new Intent(this, PerfilActivity.class)));
 
-        llBottomNav.getChildAt(1).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(MainActivity.this, "Rutas — próximamente", Toast.LENGTH_SHORT).show();
-            }
-        });
+        // Tab rutas → RutasActivity
+        llBottomNav.getChildAt(1).setOnClickListener(v ->
+                startActivity(new Intent(this, RutasActivity.class)));
 
-        llBottomNav.getChildAt(3).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(MainActivity.this, "Grupos — próximamente", Toast.LENGTH_SHORT).show();
-            }
-        });
+        // Tab grupos
+        llBottomNav.getChildAt(3).setOnClickListener(v ->
+                Toast.makeText(this, "Grupos — próximamente", Toast.LENGTH_SHORT).show());
 
-        ivNotifications.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(MainActivity.this, "Notificaciones — próximamente", Toast.LENGTH_SHORT).show();
-            }
-        });
+        ivNotifications.setOnClickListener(v ->
+                Toast.makeText(this, "Notificaciones — próximamente", Toast.LENGTH_SHORT).show());
 
-        ivSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(MainActivity.this, "Búsqueda — próximamente", Toast.LENGTH_SHORT).show();
-            }
-        });
+        ivSearch.setOnClickListener(v ->
+                Toast.makeText(this, "Búsqueda — próximamente", Toast.LENGTH_SHORT).show());
 
-        fabTrack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(MainActivity.this, "Tracking — próximamente", Toast.LENGTH_SHORT).show();
-            }
-        });
+        // FAB → historial de actividades
+        fabTrack.setOnClickListener(v ->
+                startActivity(new Intent(this, ActividadesActivity.class)));
     }
 }
