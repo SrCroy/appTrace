@@ -1,5 +1,7 @@
 package com.example.apptrace;
 
+import static androidx.activity.result.ActivityResultCallerKt.registerForActivityResult;
+
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -18,15 +20,18 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.example.apptrace.model.auth.ApiResponse;
+import com.example.apptrace.model.logro.MisLogrosResponse;
 import com.example.apptrace.model.profile.ProfileData;
 import com.example.apptrace.network.ApiService;
 import com.example.apptrace.network.RetrofitClient;
 import com.example.apptrace.session.SessionManager;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.card.MaterialCardView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -42,10 +47,13 @@ public class PerfilActivity extends AppCompatActivity {
     private TextView tvAvatarInitials, tvFullName, tvUsername, tvLocation, tvBio;
     private ImageView ivAvatarProfile, ivEditProfileIcon;
     private MaterialButton btnEditProfile, btnLogout;
+    private MaterialCardView cvLogrosPreview;
+    private TextView tvLogrosCount, tvLogrosPct;
 
     private ApiService apiService;
     private ProfileData currentProfile;
     private ActivityResultLauncher<Intent> editLauncher;
+    private boolean recargarAlVolver = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +69,9 @@ public class PerfilActivity extends AppCompatActivity {
         btnEditProfile    = findViewById(R.id.btn_edit_profile);
         ivEditProfileIcon = findViewById(R.id.iv_edit_profile_icon);
         btnLogout         = findViewById(R.id.btn_logout);
+        cvLogrosPreview   = findViewById(R.id.cv_logros_preview);
+        tvLogrosCount     = findViewById(R.id.tv_logros_count);
+        tvLogrosPct       = findViewById(R.id.tv_logros_pct);
 
         apiService = RetrofitClient.getClient().create(ApiService.class);
 
@@ -68,7 +79,7 @@ public class PerfilActivity extends AppCompatActivity {
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
                     if (result.getResultCode() == RESULT_OK) {
-                        cargarPerfil();
+                        recargarAlVolver = true;
                     }
                 }
         );
@@ -83,6 +94,8 @@ public class PerfilActivity extends AppCompatActivity {
         btnEditProfile.setOnClickListener(abrirEdicion);
         ivEditProfileIcon.setOnClickListener(abrirEdicion);
         btnLogout.setOnClickListener(v -> confirmarCierreSesion());
+        cvLogrosPreview.setOnClickListener(v ->
+                startActivity(new Intent(this, LogrosActivity.class)));
 
         // Tabs del bottom nav
         LinearLayout llBottomNav = findViewById(R.id.ll_bottom_nav);
@@ -93,9 +106,45 @@ public class PerfilActivity extends AppCompatActivity {
                 Toast.makeText(this, "Grupos — próximamente", Toast.LENGTH_SHORT).show());
 
         cargarPerfil();
+        cargarLogros();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (recargarAlVolver) {
+            recargarAlVolver = false;
+            cargarPerfil();
+        }
     }
 
     // ─── Carga ────────────────────────────────────────────────────────────────
+
+    private void cargarLogros() {
+        apiService.misLogros().enqueue(new Callback<MisLogrosResponse>() {
+            @Override
+            public void onResponse(Call<MisLogrosResponse> call, Response<MisLogrosResponse> response) {
+                if (!response.isSuccessful() || response.body() == null || !response.body().isSuccess()) {
+                    tvLogrosCount.setText("Ver logros");
+                    return;
+                }
+                MisLogrosResponse r = response.body();
+                MisLogrosResponse.Resumen res = r.getResumen();
+                int obtenidos = res != null ? res.getTotalObtenidos()
+                        : (r.getData() != null ? r.getData().size() : 0);
+                double pct = res != null ? res.getPorcentaje() : 0;
+
+                tvLogrosCount.setText(obtenidos + (obtenidos == 1 ? " logro obtenido" : " logros obtenidos"));
+                tvLogrosPct.setText(String.format(Locale.getDefault(), "%.0f%% del catálogo completado", pct));
+                tvLogrosPct.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onFailure(Call<MisLogrosResponse> call, Throwable t) {
+                tvLogrosCount.setText("Ver logros");
+            }
+        });
+    }
 
     private void cargarPerfil() {
         apiService.miPerfil().enqueue(new Callback<ApiResponse<ProfileData>>() {
@@ -140,7 +189,9 @@ public class PerfilActivity extends AppCompatActivity {
         tvAvatarInitials.setText(iniciales);
 
         Glide.with(this)
-                .load(p.getAvatar())
+                .load(RetrofitClient.storageUrl(p.getAvatar()))
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
                 .listener(new RequestListener<Drawable>() {
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model,

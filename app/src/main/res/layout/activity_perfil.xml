@@ -283,45 +283,6 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/tv_heatmap_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/space_xl"
-                android:fontFamily="@font/dm_sans"
-                android:text="Actividad 2024"
-                android:textColor="@color/text_primary"
-                android:textSize="@dimen/text_md"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/ll_global_stats" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/dm_sans"
-                android:text="127 registros"
-                android:textColor="@color/primary"
-                android:textSize="@dimen/text_sm"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@id/tv_heatmap_title"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tv_heatmap_title" />
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cv_heatmap"
-                style="@style/Widget.Trace.CardView"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_marginTop="@dimen/space_md"
-                app:layout_constraintTop_toBottomOf="@id/tv_heatmap_title">
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/surface_2"
-                    android:contentDescription="Mapa de calor de actividad" />
-            </com.google.android.material.card.MaterialCardView>
-
-            <TextView
                 android:id="@+id/tv_recent_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -332,7 +293,7 @@
                 android:textSize="@dimen/text_xs"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/cv_heatmap" />
+                app:layout_constraintTop_toBottomOf="@id/ll_global_stats" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_recent_activities"
@@ -344,6 +305,85 @@
                 tools:listitem="@layout/item_actividad_historial"
                 tools:itemCount="3" />
 
+            <!-- ═══ SECCIÓN LOGROS ═══ -->
+            <TextView
+                android:id="@+id/tv_logros_profile_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_xl"
+                android:fontFamily="@font/dm_sans"
+                android:text="LOGROS"
+                android:textColor="@color/text_disabled"
+                android:textSize="@dimen/text_xs"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rv_recent_activities" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_logros_preview"
+                style="@style/Widget.Trace.CardView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_md"
+                android:clickable="true"
+                android:focusable="true"
+                app:layout_constraintTop_toBottomOf="@id/tv_logros_profile_title">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/space_md">
+
+                    <FrameLayout
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@drawable/bg_avatar"
+                        android:backgroundTint="@color/warning">
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_launcher_foreground"
+                            app:tint="@color/background" />
+                    </FrameLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/space_md"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tv_logros_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/dm_sans"
+                            android:text="Cargando logros..."
+                            android:textColor="@color/text_primary"
+                            android:textSize="@dimen/text_base"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tv_logros_pct"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/dm_sans"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="@dimen/text_sm"
+                            android:visibility="gone" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_launcher_foreground"
+                        app:tint="@color/text_disabled" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_logout"
                 style="@style/Widget.Trace.Button"
@@ -354,7 +394,7 @@
                 android:text="Cerrar sesión"
                 android:textColor="@color/error"
                 android:textSize="@dimen/text_base"
-                app:layout_constraintTop_toBottomOf="@id/rv_recent_activities" />
+                app:layout_constraintTop_toBottomOf="@id/cv_logros_preview" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.apptrace.adapters.ActividadAdapter;
 import com.example.apptrace.model.activity.ActivityData;
 import com.example.apptrace.model.auth.ApiResponse;
 import com.example.apptrace.network.ApiService;
