@@ -108,8 +108,8 @@ public class LoginActivity extends AppCompatActivity {
                     return error.getMessage();
                 }
             }
-        } catch (IOException e) {
-            // cae al mensaje genérico
+        } catch (Exception e) {
+            // respuesta no es JSON (ej. HTML de error del servidor)
         }
         return "Credenciales inválidas";
     }
