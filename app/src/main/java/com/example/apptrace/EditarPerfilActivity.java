@@ -202,7 +202,7 @@ public class EditarPerfilActivity extends AppCompatActivity {
         layout.addView(etNueva);
         layout.addView(etConfirmar);
 
-        new AlertDialog.Builder(this)
+        new AlertDialog.Builder(this, R.style.Theme_Trace_Dialog)
                 .setTitle("Cambiar contraseña")
                 .setView(layout)
                 .setPositiveButton("Cambiar", (d, w) -> {
@@ -296,7 +296,7 @@ public class EditarPerfilActivity extends AppCompatActivity {
     }
 
     private void mostrarSelectorAvatar() {
-        new AlertDialog.Builder(this)
+        new AlertDialog.Builder(this, R.style.Theme_Trace_Dialog)
                 .setTitle("Cambiar foto de perfil")
                 .setItems(new String[]{"Tomar foto", "Elegir de galería"}, (d, which) -> {
                     if (which == 0) solicitarCamara();

@@ -97,6 +97,13 @@
         <item name="boxCornerRadiusBottomEnd">12dp</item>
     </style>
 
+    <!-- Dialog — sobreescribe materialButtonStyle para evitar botones verdes rellenos -->
+    <style name="Theme.Trace.Dialog" parent="ThemeOverlay.Material3.Dialog.Alert">
+        <item name="materialButtonStyle">@style/Widget.Material3.Button.TextButton.Dialog</item>
+        <item name="buttonBarNegativeButtonStyle">@style/Widget.Material3.Button.TextButton.Dialog</item>
+        <item name="buttonBarPositiveButtonStyle">@style/Widget.Material3.Button.TextButton.Dialog</item>
+    </style>
+
     <!-- Bottom Sheet -->
     <style name="Widget.Trace.BottomSheet" parent="Widget.Material3.BottomSheet">
         <item name="backgroundTint">@color/surface_1</item>
